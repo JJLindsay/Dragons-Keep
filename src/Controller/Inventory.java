@@ -206,15 +206,15 @@ public class Inventory
 
                     if (ruckSack[i][1].equalsIgnoreCase("w"))
                     {
-                        inInventory += "\n\tAttack boost: " + getWeapon(ruckSack[i][0]).getStrength();
+                        inInventory += "\tAttack boost: " + getWeapon(ruckSack[i][0]).getStrength() + "\n";
                     }
                     else if (ruckSack[i][1].equalsIgnoreCase("a"))
                     {
-                        inInventory += "\n\tDefensive boost: " + getArmor( ruckSack[i][0]).getArmorDefense();
+                        inInventory += "\tDefensive boost: " + getArmor( ruckSack[i][0]).getArmorDefense() + "\n";
                     }
                     else //elixir
                     {
-                        inInventory += "\n\tHealth boost: " + getElixir(ruckSack[i][0]).getHealthBoost();
+                        inInventory += "\tHealth boost: " + getElixir(ruckSack[i][0]).getHealthBoost() + "\n";
                     }
                 }
             }

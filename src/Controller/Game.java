@@ -1,9 +1,7 @@
 package Controller;
 
 import Model.*;
-
 import java.util.Map;
-import java.util.Scanner;
 import java.util.TreeMap;
 
 /**
@@ -34,8 +32,10 @@ public class Game
     private static Monster monster;
     private static boolean failed = false;
 
-//    private static Scanner input = new Scanner(System.in);
-
+    /**This manages the login & create-account interface
+     * @return a room description or the game intro for successful or unsuccessful
+     * login/create-account attempts
+     */
     public static String loginCreate(String loginName)
     {
         if (1 == loginCreate)
@@ -112,16 +112,6 @@ public class Game
             return "ERROR! Could not understand your response. Try again." + "\n\n" + gameIntro();
     }
 
-    /**This manages the login interface
-     * @return true/false Indicates successful or unsuccessful login
-     */
-   public static boolean login(){return false;}
-
-    /**This manages the create account interface
-     * @return true/false Indicates successful or unsuccessful account creation
-     */
-    public static boolean createAccount(){return false;}
-
     public static String gameIntro()
     {
         return "Welcome to Dragon's Keep!" +
@@ -148,7 +138,7 @@ public class Game
         }
     }
 
-    public static String quitGameMessage()
+    private static String quitGameMessage()
     {
         return "Do you want to save your game before closing? (yes/no)";
     }
@@ -168,8 +158,7 @@ public class Game
         }
         else
         {
-//            quitGame();
-            return "Error interpreting your last request.";
+            return "Error interpreting your last request." + "\n\n" + quitGameMessage();
         }
         return null;
     }
@@ -279,7 +268,7 @@ public class Game
         }
     }
 
-    public static String battleMessage()
+    private static String battleMessage()
     {
         //create monster
         String[] dbMonster = LoadEntity.retrieveMonster(roomsMap.get(currentRoom).getIsMonster()).split("[|]");
@@ -308,8 +297,7 @@ public class Game
         {
             if (userInput.equalsIgnoreCase("inventory"))  //cleared
             {
-                return player.getInventory().view() + "\n\n" + battleMessage();
-//                    looping = true;
+                return player.getInventory().view() + "\n" + battleMessage();
             }
             else if (userInput.length() > 5 && userInput.substring(0, 5).equalsIgnoreCase("equip"))
             {
@@ -335,7 +323,6 @@ public class Game
                 {
                     return "There was an error in trying to make sense of you request. Check your spelling." + "\n\n" + battleMessage();
                 }
-//                    looping = true;
             }
             else if (userInput.length() > 6 && userInput.substring(0, 6).equalsIgnoreCase("remove"))
             {
@@ -350,7 +337,6 @@ public class Game
                 {
                     return "There was an error in trying to make sense of you request. Check your spelling." + "\n\n" + battleMessage();
                 }
-//                    looping = true;
             }
             else if (userInput.equalsIgnoreCase("attack"))
             {
@@ -385,9 +371,6 @@ public class Game
                         return attackResults + "\n\nThere is an item to collect. Do you want to collect it? (yes/no)";
                     }
                     return attackResults + "\n\n" + changeRoomsMessage();
-
-//                        looping = false;
-//                        continue; //prevents the next if from executing
                 }
 
                 //Monster retaliates
@@ -409,9 +392,6 @@ public class Game
                     attackResults += "\n*****************************************";
 
                     return attackResults + "\n\n" + gameIntro();
-                    //player restarts at the main screen
-//                        gameIntro();
-                    //go back to last save or end game??
                 }
             } else if (userInput.equalsIgnoreCase("run away"))
             {
@@ -431,7 +411,7 @@ public class Game
 
     /**This method sets a room as empty once it has been visited and there is nothing more to do in the room
      */
-    private static void emptyRoom()
+    private static void setEmptyRoom()
     {
         //checks if every interaction with this particular room is set to 0
         if (roomsMap.get(currentRoom).getIsMonster() == 0 && roomsMap.get(currentRoom).getIsPuzzle() == 0 &&
@@ -483,7 +463,6 @@ public class Game
             roomsMap.get(currentRoom).setIsArmor(0);
 
             return "You have found " + dbArmor[0] + " and added it to your inventory." + "\n\n" + changeRoomsMessage();
-
         }
         //collect the elixir in the room
         else if (roomsMap.get(currentRoom).getIsElixir() > 0)
@@ -496,7 +475,6 @@ public class Game
             roomsMap.get(currentRoom).setIsElixir(0);
 
             return "You have found " + dbElixir[0] + " and added it to your inventory." + "\n\n" + changeRoomsMessage();
-
         }
         //collect the weapon in the room
         else
@@ -512,7 +490,7 @@ public class Game
         }
     }
 
-    public static String puzzleMessage()
+    private static String puzzleMessage()
     {
         //create and puzzle from the db
         String[] dbPuzzle = LoadEntity.retrievePuzzle(roomsMap.get(currentRoom).getIsPuzzle()).split("[|]");
@@ -535,12 +513,12 @@ public class Game
 
                if (roomsMap.get(currentRoom).getIsMonster() > 0)  //did a monster appear?
                {
-                   return puzzle.getSuccessMessage() + "\n\nAre you going to fight the monster? (yes/no)";
+                   return puzzle.getSuccessMessage() + roomSummaryMessage(); //"\n\nAre you going to fight the monster? (yes/no)";
                }
                else if (roomsMap.get(currentRoom).getIsArmor() > 0 || roomsMap.get(currentRoom).getIsWeapon() > 0 ||
                        roomsMap.get(currentRoom).getIsElixir() > 0)  //did an item appear?
                {
-                   return puzzle.getSuccessMessage() + "\n\nThere is an item to collect. Do you want to collect it? (yes/no)";
+                   return puzzle.getSuccessMessage() + roomSummaryMessage(); //"\n\nThere is an item to collect. Are you going to collect it? (yes/no)";
                }
                else  //is the room completely empty?
                {
@@ -569,7 +547,7 @@ public class Game
        }
     }
 
-    public static String gameMenuMessage()
+    private static String gameMenuMessage()
     {
         String message = "-----------------------------------------";
         message += "\nEnter \"inventory\" to check inventory. \nEnter \"equip item name\" to equip a specific item in inventory." +
@@ -593,13 +571,12 @@ public class Game
             }
             else
             {
-                return player.getInventory().view() + "\n\n" + gameMenuMessage();
+                return player.getInventory().view() + "\n" + gameMenuMessage();
             }
         }
         else if (userInput.equalsIgnoreCase("exit"))  //cleared
         {
             return changeRoomsMessage();
-
         }
         else if (userInput.equalsIgnoreCase("save"))  //cleared
         {
@@ -748,12 +725,12 @@ public class Game
             }
     }
 
-    public static String enteredRoomMessage()
+    private static String enteredRoomMessage()
     {
         if (2 == currentRoom && player.getInventory() == null)
         {
             return roomsMap.get(currentRoom).getRoomDescription() +
-                    "\nDo you want to collect the rucksack? (yes/no)";
+                    "\nAre you going to collect the rucksack? (yes/no)";
         }
         else if (roomsMap.get(currentRoom).getIsPuzzle() > 0){
             return roomsMap.get(currentRoom).getRoomDescription() +
@@ -770,7 +747,7 @@ public class Game
                 roomsMap.get(currentRoom).getIsElixir() > 0)
         {
             return roomsMap.get(currentRoom).getRoomDescription() +
-                    "\nThere is an item to collect. Do you want to collect it? (yes/no)";
+                    "\nThere is an item to collect. Are you going to collect it? (yes/no)";
         }
         else  //if the room is empty
         {
@@ -779,21 +756,37 @@ public class Game
         }
     }
 
+    private static String roomSummaryMessage()
+    {
+        if (2 == currentRoom && player.getInventory() == null)
+        {
+            return "\nAre you going to collect the rucksack? (yes/no)";
+        }
+        else if (roomsMap.get(currentRoom).getIsPuzzle() > 0){
+            return "\nAre you going to attempt this puzzle? (yes/no)";
+        }
+        //checks if an monster is in the room
+        else if (roomsMap.get(currentRoom).getIsMonster() > 0)
+        {
+            return "\nAre you going to fight the monster? (yes/no)";
+        }
+        //checks if an item is in the room
+        else
+        {
+            return "\nThere is an item to collect. Are you going to collect it? (yes/no)";
+        }
+    }
+
     /**Manages room interactions
      */
     public static String enteredRoom(String userInput) //CHANGE THIS TO ACCEPT USER INPUT enteredRoom(String userResponse)
     {
-//        boolean loop;
-
-//        do
-//        {
             //rucksack is not an item, monster or puzzle and is therefore not represented in the
             //db for the first room except to say the room is not empty. This makes the if below necessary!
             if (2 == currentRoom && player.getInventory() == null)
             {
                 if (userInput.equalsIgnoreCase("yes"))  //cleared
                 {
-//                    loop = true;
                     player.createInventory();
                     return "You've acquired a rucksack which gives you access to an inventory for holding 10 items" +
                             "\n\n" + changeRoomsMessage();
@@ -808,11 +801,10 @@ public class Game
                             "You've acquired a rucksack which gives you access to an inventory for holding 10 items" +
                             "\n\n" + changeRoomsMessage();
 
-//                    loop = true;
                 } else  //cleared
                 {
-//                    loop = true;
-                    return "There was an error in trying to make sense of your request. Check your spelling.";
+                    return "There was an error in trying to make sense of your request. Check your spelling." +
+                            roomSummaryMessage();
                 }
             }
             //checks if an puzzle is in the room
@@ -820,16 +812,14 @@ public class Game
             {
                 if (userInput.equalsIgnoreCase("yes"))  //cleared
                 {
-//                    loop = true;
                     return puzzleMessage();
                 } else if (userInput.equalsIgnoreCase("no"))  //cleared
                 {
-//                    loop = false;
                     return changeRoomsMessage();
                 } else  //cleared  -- SOMEHOW this must call enteredRoom()
                 {
-//                    loop = true;
-                    return "There was an error in trying to make sense of your request. Check your spelling.";
+                    return "There was an error in trying to make sense of your request. Check your spelling." +
+                            roomSummaryMessage();
                 }
             }
             //checks if an monster is in the room
@@ -837,16 +827,14 @@ public class Game
             {
                 if (userInput.equalsIgnoreCase("yes"))
                 {
-//                    loop = true;
                     return battleMessage();
                 } else if (userInput.equalsIgnoreCase("no"))  //cleared
                 {
-//                    loop = false;
                     return changeRoomsMessage();
                 } else  //cleared
                 {
-//                    loop = true;
-                    return "There was an error in trying to make sense of your request. Check your spelling.";
+                    return "There was an error in trying to make sense of your request. Check your spelling." +
+                            roomSummaryMessage();
                 }
             }
             //checks if an item is in the room
@@ -855,25 +843,21 @@ public class Game
             {
                 if (userInput.equalsIgnoreCase("yes"))  //cleared
                 {
-//                    loop = true;
                     return collectItem();
                 } else if (userInput.equalsIgnoreCase("no"))  //cleared
                 {
-//                    loop = false;
                     return changeRoomsMessage();
                 } else  //cleared
                 {
-//                    loop = true;
-                    return "There was an error in trying to make sense of your request. Check your spelling.";
+                    return "There was an error in trying to make sense of your request. Check your spelling." +
+                            roomSummaryMessage();
                 }
             }
             //if there is no monster, puzzle, or item.
             else  //cleared
             {
-//                loop = false;
-                emptyRoom();
+                setEmptyRoom();
                 return changeRooms(userInput);
             }
-//        }while(loop);
     }
 }
