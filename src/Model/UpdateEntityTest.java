@@ -1,4 +1,4 @@
-package Controller;
+package Model;
 
 import org.junit.*;
 
@@ -13,19 +13,19 @@ import static org.junit.Assert.*;
  * Course: ITEC 3860 Fall 2014
  * Written: 12/5/2014
  *
- * This class represents a ControllerUpdate JUnit Test.
+ * This class represents a UpdateEntity JUnit Test.
  *
- * Purpose: Tests all the methods in the ControllerUpdate class.
+ * Purpose: Tests all the methods in the UpdateEntity class.
  */
-public class ControllerUpdateTest
+public class UpdateEntityTest
 {
-    static Controller tdb = new Controller();
+    static Database tdb = new Database();
     static int playerID;
 
     @BeforeClass
     public static void setup()
     {
-        assertTrue(Controller.createAccount("JUnitTestName") > 0);
+        assertTrue(Database.createAccount("JUnitTestName") > 0);
 
         try
         {
@@ -48,7 +48,7 @@ public class ControllerUpdateTest
     @Test
     public void testSaveHeroData() throws Exception
     {
-        assertTrue(ControllerUpdate.saveHeroData(playerID + "|JUnitTestName|1|93|12"));
+        assertTrue(UpdateEntity.saveHeroData(playerID + "|JUnitTestName|1|93|12"));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ControllerUpdateTest
         {
             rooms += "|" + (i%2);
         }
-        assertTrue(ControllerUpdate.saveRoomState(rooms));
+        assertTrue(UpdateEntity.saveRoomState(rooms));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class ControllerUpdateTest
         tempInventory[2][0] = "Blue Elixir";
         tempInventory[2][1] = "e";
 
-        assertTrue(ControllerUpdate.saveHeroInventory(playerID, tempInventory));
+        assertTrue(UpdateEntity.saveHeroInventory(playerID, tempInventory));
     }
 
     @AfterClass

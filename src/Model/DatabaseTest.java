@@ -1,4 +1,4 @@
-package Controller;
+package Model;
 
 import org.junit.*;
 
@@ -13,29 +13,29 @@ import static org.junit.Assert.*;
  * Course: ITEC 3860 Fall 2014
  * Written: 12/5/2014
  *
- * This class represents an Controller JUnit Test.
+ * This class represents an Database JUnit Test.
  *
- * Purpose: Tests all the methods in the Controller class.
+ * Purpose: Tests all the methods in the Database class.
  */
-public class ControllerTest
+public class DatabaseTest
 {
-    private static Controller tdb = new Controller();
+    private static Database tdb = new Database();
     private static int playerID;
 
     @Test
     public void testCreateAccount() throws Exception
     {
-        assertTrue(Controller.createAccount("createTestName") > 0);
+        assertTrue(Database.createAccount("createTestName") > 0);
     }
 
     @Test
     public void testLoginAccount() throws Exception
     {
-        assertTrue(Controller.loginAccount("createTestName"));
+        assertTrue(Database.loginAccount("createTestName"));
 
-        assertFalse(Controller.loginAccount(null));
-        assertFalse(Controller.loginAccount(""));
-        assertFalse(Controller.loginAccount(" "));
+        assertFalse(Database.loginAccount(null));
+        assertFalse(Database.loginAccount(""));
+        assertFalse(Database.loginAccount(" "));
     }
 
     @Test

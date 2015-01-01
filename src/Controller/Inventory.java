@@ -1,4 +1,4 @@
-package Model;
+package Controller;
 
 /**
  * author: JJ Lindsay
@@ -192,36 +192,38 @@ public class Inventory
     /**Displays a detailed view of the ruckSack/inventory contents by
      * also displaying the stats on each item
      */
-    public void view()
+    public String view()
     {
+        String inInventory = "";
         if (itemCount > 0)
         {
             for (int i = 0; i < ruckSack.length; i++)
             {
                 if (ruckSack[i][0] != null)
                 {
-                    System.out.print("Item type: " + ruckSack[i][1]);
-                    System.out.print("\tItem: " + ruckSack[i][0]);
+                    inInventory += "Item type: " + ruckSack[i][1];
+                    inInventory += "\tItem: " + ruckSack[i][0];
 
                     if (ruckSack[i][1].equalsIgnoreCase("w"))
                     {
-                        System.out.println("\tAttack boost: " + getWeapon(ruckSack[i][0]).getStrength());
+                        inInventory += "\n\tAttack boost: " + getWeapon(ruckSack[i][0]).getStrength();
                     }
                     else if (ruckSack[i][1].equalsIgnoreCase("a"))
                     {
-                        System.out.println("\tDefensive boost: " + getArmor( ruckSack[i][0]).getArmorDefense());
+                        inInventory += "\n\tDefensive boost: " + getArmor( ruckSack[i][0]).getArmorDefense();
                     }
                     else //elixir
                     {
-                        System.out.println("\tHealth boost: " + getElixir(ruckSack[i][0]).getHealthBoost());
+                        inInventory += "\n\tHealth boost: " + getElixir(ruckSack[i][0]).getHealthBoost();
                     }
                 }
             }
         }
         else
         {
-            System.out.println("Your inventory appears to be empty.");
+            inInventory = "Your inventory appears to be empty.";
         }
+        return inInventory;
     }
 
     /**Finds an weapon in the ruckSack/inventory and retrieves the weapon from the weapons array

@@ -1,4 +1,4 @@
-package Controller;
+package Model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,13 +9,13 @@ import java.sql.SQLException;
  * Course: ITEC 3150 Fall 2014
  * Written: 12/5/2014
  *
- * This class represents a Controller with save methods
+ * This class represents a Database with save methods
  *
  * Purpose: Gives the ability to save the player's inventory, stats, and rooms into the database
  */
-public class ControllerUpdate
+public class UpdateEntity
 {
-    private static Controller tdb = new Controller();
+    private static Database tdb = new Database();
     private static int shiKey = 1;
 
 
@@ -98,7 +98,7 @@ public class ControllerUpdate
         boolean looping;
 
         //if the playerID already exist, delete it
-        ResultSet rs = null;
+        ResultSet rs;
         try
         {
             //Query the database. Returns the results in a ResultSet

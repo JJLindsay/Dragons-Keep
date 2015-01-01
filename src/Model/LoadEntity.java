@@ -1,4 +1,4 @@
-package Controller;
+package Model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,15 +9,15 @@ import java.sql.SQLException;
  * Course: ITEC 3150 Fall 2014
  * Written: 12/5/2014
  *
- * This class represents a Controller with load methods.
+ * This class represents a Database with load methods.
  *
  * Purpose: Gives the ability to load saves, Items, Actors, Puzzles, and rooms from the database
  */
-public class ControllerLoad
+public class LoadEntity
 {
     //instance variables
     private static ResultSet rs = null;
-    private static Controller tdb = new Controller();
+    private static Database tdb = new Database();
 
     /**Retrieves the state of the saved rooms
      * @param playerID The player's database ID

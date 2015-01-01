@@ -1,4 +1,4 @@
-package Model;
+package Controller;
 
 /**
  * author: Thaonguyen Nguyen
@@ -16,8 +16,6 @@ abstract class Actor
 	private String name;
 	private int health;	
 	private int attackPower;
-
-
 
     /**One argument constructor
      * @param name The Actor's name

@@ -1,13 +1,11 @@
 package JunitTestCases;
 
-import Model.Inventory;
-import Model.Weapon;
-import Model.Armor;
-import Model.Elixir;
+import Controller.Inventory;
+import Controller.Weapon;
+import Controller.Armor;
+import Controller.Elixir;
 
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

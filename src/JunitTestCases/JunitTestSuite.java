@@ -1,8 +1,8 @@
 package JunitTestCases;
 
-import Controller.ControllerLoadTest;
-import Controller.ControllerUpdateTest;
-import Controller.ControllerTest;
+import Model.DatabaseTest;
+import Model.LoadEntityTest;
+import Model.UpdateEntityTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -20,9 +20,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         InventoryTest.class,
-        ControllerTest.class,
-        ControllerUpdateTest.class,
-        ControllerLoadTest.class
+        DatabaseTest.class,
+        UpdateEntityTest.class,
+        LoadEntityTest.class
 })
 public class JunitTestSuite {
 }

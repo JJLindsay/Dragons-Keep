@@ -1,4 +1,4 @@
-package Model;
+package Controller;
 
 /**
  * author: Thaonguyen Nguyen
@@ -43,7 +43,6 @@ public class Hero extends Actor
         inventory = null;  //create inventory will update this.
 	}
 
-
     /**Creates a Hero's inventory
      */
 	public void createInventory()
@@ -57,7 +56,6 @@ public class Hero extends Actor
 	public Inventory getInventory() {
 		return inventory;
 	}
-
 
     /**
      * @return score Gets the Hero's score

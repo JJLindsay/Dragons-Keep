@@ -1,4 +1,4 @@
-package Controller;
+package Model;
 
 /**
  * author: JJ Lindsay
@@ -6,14 +6,14 @@ package Controller;
  * Course: ITEC 3150 Fall 2014
  * Written: 12/5/2014
  *
- * This class represents a Controller with create methods.
+ * This class represents a Database with create methods.
  *
  * Purpose: Gives the ability to add new Puzzles and monsters into the database
  */
-public class ControllerCreate
+public class CreateEntity
 {
     //instance variables
-    private static Controller tdb = new Controller();
+    private static Database tdb = new Database();
     private static boolean duplicateKey = true;
     private static int cpKey = 1;
     private static int cmKey = 1;

@@ -1,4 +1,4 @@
-package Controller;
+package Model;
 
 import java.sql.*;
 
@@ -8,22 +8,22 @@ import java.sql.*;
  * Course: ITEC 3860 Fall 2014
  * Written: 11/16/2014
  *
- * This class represents a Controller with account methods.
+ * This class represents a Database with account methods.
  *
  * Purpose: Gives the ability to log into or create a new player profile in the database.
  */
-public class Controller
+public class Database
 {
     //instance variables
     private static Statement stmt;
     private static ResultSet rs = null;
-    private static Controller tdb = new Controller();
+    private static Database tdb = new Database();
     private static boolean duplicateKey = true;
     private static int caKey = 1;
 
     /**No argument constructor
      */
-    protected Controller()
+    protected Database()
     {
         //register the driver name
         String sDriver = "org.sqlite.JDBC";

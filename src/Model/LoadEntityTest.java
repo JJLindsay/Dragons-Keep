@@ -1,26 +1,26 @@
-package Controller;
+package Model;
 
 import org.junit.*;
 
 import static org.junit.Assert.*;
 
-public class ControllerLoadTest
+public class LoadEntityTest
 {
-    private static Controller tdb = new Controller();
+    private static Database tdb = new Database();
     private static int playerID;
 
     @BeforeClass
     public static void  setUp() throws Exception
     {
-        playerID = Controller.createAccount("JUnitTestName");
-        ControllerUpdate.saveHeroData(playerID + "|JUnitTestName|1|77|61");
+        playerID = Database.createAccount("JUnitTestName");
+        UpdateEntity.saveHeroData(playerID + "|JUnitTestName|1|77|61");
 
         String rooms = playerID + "|" + 14;
         for (int i = 1; i <= 50;  i++)
         {
             rooms += "|" + (i%2);
         }
-        ControllerUpdate.saveRoomState(rooms);
+        UpdateEntity.saveRoomState(rooms);
 
         String[][] tempInventory = new String[3][2];
         tempInventory[0][0] = "dagger";
@@ -30,7 +30,7 @@ public class ControllerLoadTest
         tempInventory[2][0] = "Red Elixir";
         tempInventory[2][1] = "e";
 
-        ControllerUpdate.saveHeroInventory(playerID, tempInventory);
+        UpdateEntity.saveHeroInventory(playerID, tempInventory);
     }
 
     @AfterClass
@@ -49,7 +49,7 @@ public class ControllerLoadTest
         {
             rooms += "|" + (i%2);
         }
-        assertEquals(rooms, ControllerLoad.loadSavedRooms(playerID));
+        assertEquals(rooms, LoadEntity.loadSavedRooms(playerID));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class ControllerLoadTest
     {
         String expected = playerID + "|JUnitTestName|1|77|61|";
 
-        assertEquals(expected, ControllerLoad.loadHero("JUnitTestName"));
+        assertEquals(expected, LoadEntity.loadHero("JUnitTestName"));
     }
 
     @Test
@@ -65,13 +65,13 @@ public class ControllerLoadTest
     {
         String expected = "1|0|0|0|1|0|0|0|3|";
 
-        assertEquals(expected, ControllerLoad.loadHeroInventory(playerID));
+        assertEquals(expected, LoadEntity.loadHeroInventory(playerID));
     }
 
     @Test
     public void testRetrieveAllRooms() throws Exception
     {
-        String[] actual = ControllerLoad.retrieveAllRooms().split("[|]]");
+        String[] actual = LoadEntity.retrieveAllRooms().split("[|]]");
 
         for(int i = 0; i < actual.length-11; i = i+12)
         {
@@ -97,7 +97,7 @@ public class ControllerLoadTest
     {
         String expected = "Blue Dragon|31|51";
 
-        assertEquals(expected, ControllerLoad.retrieveMonster(5));
+        assertEquals(expected, LoadEntity.retrieveMonster(5));
     }
 
     @Test
@@ -105,7 +105,7 @@ public class ControllerLoadTest
     {
         String expected = "Dragon Scales|48";
 
-        assertEquals(expected, ControllerLoad.retrieveArmor(3));
+        assertEquals(expected, LoadEntity.retrieveArmor(3));
     }
 
     @Test
@@ -113,7 +113,7 @@ public class ControllerLoadTest
     {
         String expected = "Blue Elixir|10";
 
-        assertEquals(expected, ControllerLoad.retrieveElixir(1));
+        assertEquals(expected, LoadEntity.retrieveElixir(1));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class ControllerLoadTest
     {
         String expected = "Axe|8";
 
-        assertEquals(expected, ControllerLoad.retrieveWeapon(6));
+        assertEquals(expected, LoadEntity.retrieveWeapon(6));
     }
 
     @Test
@@ -134,6 +134,6 @@ public class ControllerLoadTest
         expected.append("|nothing happened");
         expected.append("|0");
 
-        assertEquals(expected.toString(), ControllerLoad.retrievePuzzle(2));
+        assertEquals(expected.toString(), LoadEntity.retrievePuzzle(2));
     }
 }
