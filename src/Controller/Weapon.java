@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.LoadEntity;
+
 /**
  * @author Everton Gardiner Jr.
  * @version 1.0
@@ -15,14 +17,15 @@ public class Weapon extends Item
     //instance variable
 	private int strength;
 
-    /**Two argument constructor
-     * @param name The name of the weapon
-     * @param strength The weapon's strength
+    /**no argument constructor
      */
-	public Weapon(String name, int strength)
+	public Weapon()
 	{
-		super(name);
-		this.strength = strength;
+		super("");
+        //get an weapon from the database
+        String[] dbWeapon = LoadEntity.retrieveWeapon(Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsWeapon()).split("[|]");
+        this.setItemName(dbWeapon[0]);
+		this.strength = Integer.parseInt(dbWeapon[1]);
 	}
 
 	/**

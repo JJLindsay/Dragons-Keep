@@ -1,7 +1,7 @@
 package View;
 
-import Controller.Game;
-
+import Controller.GameInteractions;
+import Controller.*;
 import java.util.Scanner;
 
 /**
@@ -49,12 +49,12 @@ public class View
     {
         if(startingUp)
         {
-            display = Game.gameIntro();  //enter 1 or 2 for login/create account
+            display = MenusAndMessages.gameIntro();  //enter 1 or 2 for login/create account
             System.out.println(display);
             response = keyboard.nextLine();
         }
 
-        display = Game.playGame(response);   //entering 1 or 2 to login or create, receive login/create
+        display = GameInteractions.playGame(response);   //entering 1 or 2 to login or create, receive login/create
         System.out.println(display);  //login, create, or error --> gameIntro()
         startingUp = false;
         //enter the user name to create or login
@@ -64,7 +64,7 @@ public class View
             gameMenus();
 
 
-        display = Game.loginCreate(response);
+        display = AccountFunctions.loginCreate(response);
         System.out.println(display);  //loaded-->enteredRoomMessage, created-->enteredRoomMessage, or error--> gameIntro()
         response = keyboard.nextLine();  //enters name
 
@@ -76,7 +76,7 @@ public class View
 
     private void mainMenu()
     {
-        display = Game.gameMenu(response);
+        display = GameInteractions.mainMenu(response);
         System.out.println(display);  //gameMenuMessage
         response = keyboard.nextLine();
 
@@ -84,7 +84,7 @@ public class View
     }
     private void moveLocationMenu()
     {
-        display = Game.changeRooms(response);  //calls enteredRoom for room description
+        display = EnteringAndChangingRooms.changingRooms(response);  //calls enteredRoom for room description
         System.out.println(display);
         response = keyboard.nextLine();  //user responds
 
@@ -93,7 +93,7 @@ public class View
 
     private void enteringRoomMenu()
     {
-        display = Game.enteredRoom(response);  //allows room interaction:: enter room response, initially rucksack, received changedRoomsMessage()
+        display = EnteringAndChangingRooms.enteredRoom(response);  //allows room interaction:: enter room response, initially rucksack, received changedRoomsMessage()
         System.out.println(display);
         response = keyboard.nextLine();  //user responds
 
@@ -102,7 +102,7 @@ public class View
 
     private void battleMenu()
     {
-        display = Game.battle(response);
+        display = GameInteractions.battle(response);
         System.out.println(display);  //SOP inventory --> battleMenu
         response = keyboard.nextLine();
 
@@ -116,7 +116,7 @@ public class View
 
     private void puzzleMenu()
     {
-        display = Game.solvePuzzle(response);
+        display = new Puzzle().solvePuzzle(response);
         System.out.println(display);  //SOP congrats on getting the puzzle right, pursue the monster?, collect the item?, or move on?
         response = keyboard.nextLine();
 
@@ -125,7 +125,7 @@ public class View
 
     private void quitGameMenu()
     {
-        display = Game.quitGame(response);
+        display = GameInteractions.quitGame(response);
         System.out.println(display);
         response = keyboard.nextLine();  //user responds
 

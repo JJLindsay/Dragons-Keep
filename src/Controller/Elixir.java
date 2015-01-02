@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.LoadEntity;
+
 /**
  * @author Everton Gardiner Jr.
  * @version 1.0
@@ -17,15 +19,14 @@ public class Elixir extends Item
 	/**
 	 * Method: Constructor
 	 * Constructor for Elixir class
-	 * @param name The name of the elixir
-     * @param healthBoost The health boost found in the elixir
 	 */
-	public Elixir(String name, int healthBoost)
+	public Elixir()
 	{
-        //parsing must happen outside this class
-        //String[] attributes = elixirAttributes.split("[|]]");
-        super(name);
-        this.healthBoost = healthBoost;
+        super("");
+        //get an elixir from the database
+        String[] dbElixir = LoadEntity.retrieveElixir(Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsElixir()).split("[|]");
+        this.setItemName(dbElixir[0]);
+        this.healthBoost = Integer.parseInt(dbElixir[1]);
 	}
 
 	/**

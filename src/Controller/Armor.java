@@ -1,4 +1,7 @@
 package Controller;
+
+import Model.LoadEntity;
+
 /**
  * @author Everton Gardiner Jr.
  * @version 1.0
@@ -12,18 +15,18 @@ package Controller;
 public class Armor extends Item
 {
     //instance variables
-	private int armorDefense;
+	private int armorStrength;
 
-	/**
+    /**
 	 * Method: Constructor for Armor class
-	 * Constructor for Armor class that has int String, and int as arguments
-	 * @param itemName The name of the armor
-     * @param armorDefense The defence strength of the armor
+	 * Constructor for Armor class
 	 */
-	public Armor(String itemName,int armorDefense)
+	public Armor()
 	{
-		super(itemName);
-		this.armorDefense = armorDefense;
+		super("");
+        String[] dbArmor = LoadEntity.retrieveArmor(Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsArmor()).split("[|]");
+        this.setItemName(dbArmor[0]);
+		this.armorStrength = Integer.parseInt(dbArmor[1]);
 	}
 
 	/**
@@ -33,6 +36,6 @@ public class Armor extends Item
 	 */
 	public int getArmorDefense()
 	{
-		return armorDefense;
+		return armorStrength;
 	}
 }

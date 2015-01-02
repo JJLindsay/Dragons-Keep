@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.LoadEntity;
+
 /**
  * author: Thaonguyen Nguyen
  * version: 1.0
@@ -12,12 +14,14 @@ package Controller;
  */
 public class Monster extends Actor
 {
-    /**Three argument constructor
-     * @param name The monster's name
-     * @param attackPower The monster's attack power
-     * @param health The monster's health
+    /**no argument constructor
      */
-	public Monster(String name, int attackPower, int health) {
-		super(name, health, attackPower);
+	public Monster() {
+		super();
+        //create monster
+        String[] dbMonster = LoadEntity.retrieveMonster(Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsMonster()).split("[|]");
+        this.setName(dbMonster[0]);
+        this.setHealth(Integer.parseInt(dbMonster[1]));
+        this.setAttackPower(Integer.parseInt(dbMonster[2]));
 	}
 }

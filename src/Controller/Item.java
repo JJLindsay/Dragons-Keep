@@ -33,4 +33,10 @@ abstract class Item
 	{
 		return itemName;
 	}
+
+    public void setItemName(String itemName)
+    {
+        this.itemName = itemName;
+    }
+
 }

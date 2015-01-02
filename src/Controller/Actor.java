@@ -17,6 +17,14 @@ abstract class Actor
 	private int health;	
 	private int attackPower;
 
+    public Actor ()
+    {
+        this.name = "";
+        this.health = 0;
+        this.attackPower = 0;
+    }
+
+
     /**One argument constructor
      * @param name The Actor's name
      */
@@ -51,6 +59,11 @@ abstract class Actor
     public String getName() {
 		return name;
 	}
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 
     /**
      * @return health Gets the Actor's health
