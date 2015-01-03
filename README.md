@@ -1,7 +1,11 @@
 Welcome to Dragons-Keep
 ===========
 
-Dragons Keep is a text based adventure game being written for ITEC 3860, Software Development I
+Dragons Keep is a text based adventure game written for ITEC 3860, Software Development I
+--This started as a course project but I have since heavily updated this and continue to do so...
+
+ENJOY :)
+Advice and sugggestions are welcome!
 
 
 HOW TO RUN
@@ -20,4 +24,4 @@ HOW TO RUN
 
 4) The file DragonsKeepV4.jar is the runnable file allowing users to run their game without having a compiler*
 
-*This .jar file is not the abosolute newest version of Dragons-Keep
+*This .jar file is not the absolute newest version of Dragons-Keep
