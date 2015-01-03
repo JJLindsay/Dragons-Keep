@@ -10,17 +10,23 @@ import java.util.Scanner;
  * Course: ITEC 3150 Fall 2014
  * Written: 12/23/2014
  *
- * This class represents the View in Model View Controller
+ * This class represents the View in Model-View-Controller
  *
- * Purpose: To pose the user a question or to receive an answer. Also, it restricts the user's access to the bare min
+ * Purpose: To pose the user a question or to receive an answer. Also, it restricts the user's access to the bare minimum
  */
 public class View
 {
+    //instance variables
     private String display = "Error";  //set to 'error' so opening sequence runs the first time.
     private Scanner keyboard = new Scanner(System.in);
     private String response;
     private boolean startingUp = true;
 
+    //static instance variable
+    private static String controllerDisplay;
+
+    /**All the in-game menus displayed to the user
+     */
     public void gameMenus()
     {
         if (display.contains("Error"))
@@ -45,66 +51,67 @@ public class View
             quitGameMenu();
     }
 
+    /**Passes the user's response to titleScreenInput(), displays the results, and accepts the user's reply
+     * If there are errors
+     */
     private void openingSequence()
     {
         if(startingUp)
         {
-            display = MenusAndMessages.gameIntro();  //enter 1 or 2 for login/create account
-            System.out.println(display);
-            response = keyboard.nextLine();
+            display = MenusAndMessages.titleScreen();  //enter 1 or 2 for login/create account
+            showDisplayAndRespond();
         }
 
-        display = GameInteractions.playGame(response);   //entering 1 or 2 to login or create, receive login/create
-        System.out.println(display);  //login, create, or error --> gameIntro()
+        display = GameInteractions.titleScreenInput(response);   //entering 1 or 2 to login or create, receive login/create
+        showDisplayAndRespond();
         startingUp = false;
-        //enter the user name to create or login
-        response = keyboard.nextLine();  //enters name
 
         if (display.contains("Error"))
             gameMenus();
 
-
         display = AccountFunctions.loginCreate(response);
-        System.out.println(display);  //loaded-->enteredRoomMessage, created-->enteredRoomMessage, or error--> gameIntro()
-        response = keyboard.nextLine();  //enters name
-
-        if (display.contains("ERROR!"))
-            gameMenus();
+        showDisplayAndRespond();
 
         gameMenus();
     }
 
+    /**Passes the user's response to mainMenu(), displays the results, accepts the user's reply and calls gameMenus()
+     */
     private void mainMenu()
     {
         display = GameInteractions.mainMenu(response);
-        System.out.println(display);  //gameMenuMessage
-        response = keyboard.nextLine();
+        showDisplayAndRespond();
 
         gameMenus();
     }
+
+    /**Passes the user's response to changingRooms(), displays the results, accepts the user's reply and calls gameMenus()
+     */
     private void moveLocationMenu()
     {
-        display = EnteringAndChangingRooms.changingRooms(response);  //calls enteredRoom for room description
-        System.out.println(display);
-        response = keyboard.nextLine();  //user responds
+        display = RoomChangesAndInteractions.changingRooms(response);  //calls roomInteractions for room description
+        showDisplayAndRespond();
 
         gameMenus();
     }
 
+    /**Passes the user's response to roomInteractions(), displays the results, accepts the user's reply and calls gameMenus()
+     */
     private void enteringRoomMenu()
     {
-        display = EnteringAndChangingRooms.enteredRoom(response);  //allows room interaction:: enter room response, initially rucksack, received changedRoomsMessage()
-        System.out.println(display);
-        response = keyboard.nextLine();  //user responds
+        display = RoomChangesAndInteractions.roomInteractions(response);  //allows room interaction:: enter room response, initially rucksack, received changedRoomsMessage()
+        showDisplayAndRespond();
 
         gameMenus();
     }
 
+    /**Passes the user's response to battle(), displays the results, and accepts the user's reply.
+     * If the user died, openingSequence() is called otherwise gameMenus() is called
+     */
     private void battleMenu()
     {
         display = GameInteractions.battle(response);
-        System.out.println(display);  //SOP inventory --> battleMenu
-        response = keyboard.nextLine();
+        showDisplayAndRespond();
 
         if (display.contains("keep!"))
         {
@@ -114,21 +121,49 @@ public class View
         gameMenus();
     }
 
+    /**Passes the user's response to solvePuzzle(), displays the results, accepts the user's reply and calls gameMenus()
+     */
     private void puzzleMenu()
     {
         display = new Puzzle().solvePuzzle(response);
-        System.out.println(display);  //SOP congrats on getting the puzzle right, pursue the monster?, collect the item?, or move on?
-        response = keyboard.nextLine();
+        showDisplayAndRespond();
 
         gameMenus();
     }
 
+    /**Passes the user's response to quitGame(), displays the results, accepts the user's reply and calls gameMenus()
+     */
     private void quitGameMenu()
     {
         display = GameInteractions.quitGame(response);
-        System.out.println(display);
-        response = keyboard.nextLine();  //user responds
+        showDisplayAndRespond();
 
         gameMenus();
+    }
+
+    /**
+     * Displays the a message and accepts the user's response
+     */
+    private void showDisplayAndRespond()
+    {
+        if (null == controllerDisplay)
+        {
+            System.out.println(display);
+        }
+        else
+        {
+            System.out.println(controllerDisplay);
+            System.out.println(display);
+            controllerDisplay = null;
+        }
+        response = keyboard.nextLine();  //user responds
+    }
+
+    /**Allows Inventory methods in the Controller package with return types other than string to send a message to View
+     * @param controllerDisplay The message to be displayed
+     */
+    public static void setControllerDisplay(String controllerDisplay)
+    {
+        View.controllerDisplay = controllerDisplay;
     }
 }

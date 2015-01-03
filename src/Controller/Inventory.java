@@ -1,8 +1,10 @@
 package Controller;
 
+import View.View;
+
 /**
  * author: JJ Lindsay
- * version: 1.0
+ * version: 2.0
  * Course: ITEC 3860 Fall 2014
  * Written: 11/16/2014
  *
@@ -59,7 +61,7 @@ public class Inventory
                 }
             }
         }
-        System.out.println("You are unable to carry any more items.");
+        View.setControllerDisplay("You are unable to carry any more items.");
         return false;
     }
 
@@ -89,7 +91,7 @@ public class Inventory
                 }
             }
         }
-        System.out.println("You are unable to carry any more items.");
+        View.setControllerDisplay("You are unable to carry any more items.");
         return false;
     }
 
@@ -119,7 +121,7 @@ public class Inventory
                 }
             }
         }
-        System.out.println("You are unable to carry any more items.");
+        View.setControllerDisplay("You are unable to carry any more items.");
         return false;
     }
 
@@ -155,15 +157,12 @@ public class Inventory
                     int x = 0;
                     while (x < SIZELIMIT)
                     {
-//                        System.out.println("Elixir saved name: "+ elixirs[x].getItemName()); //DEBUG CODE
-//                        System.out.println("User entered name: " + weaponArmElix);  //DEBUG CODE
                         if (elixirs[x] != null && elixirs[x].getItemName().equalsIgnoreCase(weaponArmElixName))
                         {
                             elixirs[x] = null;
                             ruckSack[p][0] = null;
                             ruckSack[p][1] = null;
                             itemCount--;
-//                            x = SIZELIMIT;
                             return true;
                         }
                         x++;
@@ -185,7 +184,7 @@ public class Inventory
                 }
             }
         }
-        System.out.println(weaponArmElixName + " could not be found in your inventory.");
+        View.setControllerDisplay(weaponArmElixName + " could not be found in your inventory.");
         return false;
     }
 
@@ -239,7 +238,7 @@ public class Inventory
                 return weapons[s];
             }
         }
-        System.out.println("Your inventory appears to be empty.");
+        View.setControllerDisplay("Your inventory appears to be empty.");
         return null;
     }
 
@@ -256,7 +255,7 @@ public class Inventory
                 return elixirs[s];
             }
         }
-        System.out.println("Your inventory appears to be empty.");
+        View.setControllerDisplay("Your inventory appears to be empty.");
         return null;
     }
 
@@ -273,7 +272,7 @@ public class Inventory
                 return armors[s];
             }
         }
-        System.out.println("Your inventory appears to be empty.");
+        View.setControllerDisplay("Your inventory appears to be empty.");
         return null;
     }
 
@@ -295,11 +294,11 @@ public class Inventory
                 }
                 h++;
             }
-            System.out.println("No item with the name: " + weaponArmElixName + " could be found in your inventory. Check your spelling and try again.");
+            View.setControllerDisplay("No item with the name: " + weaponArmElixName + " could be found in your inventory. Check your spelling and try again.");
         }
         else
         {
-            System.out.println("Your inventory appears to be empty.");
+            View.setControllerDisplay("Your inventory appears to be empty.");
         }
         return false;
     }
@@ -317,12 +316,12 @@ public class Inventory
                 return ruckSack[s][1];
             }
         }
-        System.out.println("An item type for " + weaponArmElixName + " could not be found in your inventory."); //This will come out the final version
+        View.setControllerDisplay("An item type for " + weaponArmElixName + " could not be found in your inventory.");
         return null;
     }
 
     /**
-     * @return ruckSack Gets the ruckSack
+     * @return ruckSack Gets the ruckSack/inventory
      */
     public String[][] getRuckSack()
     {

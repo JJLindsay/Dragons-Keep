@@ -3,14 +3,14 @@ package Controller;
 import Model.LoadEntity;
 
 /**
- * @author Everton Gardiner Jr.
- * @version 1.0
+ * @author Everton Gardiner Jr. and JJ Lindsay
+ * @version 2.0
  * Course : ITEC 3860 Fall 2014
  * Written: Nov 14, 2014
  *
  * This class illustrates how to create and Elixir object
  *
- * Purpose: To create an Elixir object
+ * Purpose: To create an Elixir object from the database
  */
 public class Elixir extends Item
 {

@@ -1,14 +1,13 @@
 package Controller;
 
 import Model.LoadEntity;
-
 import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**Class: Rooms
- * author Everton Gardiner Jr.
- * version 1.0
+ * author Everton Gardiner Jr. and JJ Lindsay
+ * version 2.0
  * Course : ITEC 3150 Spring 2014
  * Written: Nov 18, 2014
  *
@@ -28,7 +27,7 @@ public class Rooms
 	private int isEmpty; // 0 or 1 acts as sqlite boolean
 	private String[] choices; //room options for exiting North south east west
 
-    //NEW
+    //static instance variables
     private static int currentRoom;
     private static Map<Integer, Rooms> roomsMap;
 
@@ -232,16 +231,25 @@ public class Rooms
         this.isEmpty = isEmpty;
     }
 
+    /**
+     * @return currentRoom Gets the currentRoom
+     */
     public static int getCurrentRoom()
     {
         return currentRoom;
     }
 
+    /**Sets the current room
+     * @param currentRoom the new current room
+     */
     public static void setCurrentRoom(int currentRoom)
     {
         Rooms.currentRoom = currentRoom;
     }
 
+    /**
+     * @return roomsMap Gets the roomsMap
+     */
     public static Map<Integer, Rooms> getRoomsMap()
     {
         return roomsMap;

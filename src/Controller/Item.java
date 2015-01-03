@@ -38,5 +38,4 @@ abstract class Item
     {
         this.itemName = itemName;
     }
-
 }

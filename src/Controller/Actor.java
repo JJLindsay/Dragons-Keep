@@ -17,6 +17,8 @@ abstract class Actor
 	private int health;	
 	private int attackPower;
 
+    /**No argument constructor
+     */
     public Actor ()
     {
         this.name = "";
@@ -24,22 +26,12 @@ abstract class Actor
         this.attackPower = 0;
     }
 
-
     /**One argument constructor
      * @param name The Actor's name
      */
 	public Actor(String name) {
 		this(name, 100, 0);
 	}
-
-    /**Two arg constructor
-     * @param name The Actor's name
-     * @param health The Actor's health
-     */
-    public Actor (String name, int health)
-    {
-        this(name, health, 0);
-    }
 
     /**Three arg constructor
      * @param name The Actor's name
@@ -60,10 +52,12 @@ abstract class Actor
 		return name;
 	}
 
+    /**Sets the name of the Actor object
+     * @param name The name to assign to the Actor object
+     */
     public void setName(String name) {
         this.name = name;
     }
-
 
     /**
      * @return health Gets the Actor's health

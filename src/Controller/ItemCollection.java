@@ -6,14 +6,13 @@ package Controller;
  * Course: ITEC 3150 Fall 2014
  * Written: 1/2/2015
  *
- * This class represents a ...
+ * This class represents Item collection
  *
- * Purpose: Allows the manipulation of a ...
+ * Purpose: Allows an item in a room to be collected and added to the player's inventory
  */
 public class ItemCollection
 {
-
-    //NEW
+    //static instance variables
     private static Hero player = AccountFunctions.getHero();
 
     /**This method manages the collection of any given item found in a room

@@ -3,8 +3,8 @@ package Controller;
 import Model.LoadEntity;
 
 /**
- * @author Everton Gardiner Jr.
- * @version 1.0
+ * @author Everton Gardiner Jr. and JJ Lindsay
+ * @version 2.0
  * Course : ITEC 3860 
  * Written: Nov 14, 2014
  *
@@ -19,10 +19,9 @@ public class Puzzle
     private String solution;
     private String successMessage;
 	private String failureMessage;
-    private int completedPuzzle;
     private boolean failed = false;
 
-    /**Five arg constructor
+    /**No argument constructor
      */
 	public Puzzle()
 	{
@@ -33,7 +32,6 @@ public class Puzzle
         this.solution = dbPuzzle[1];
         this.successMessage = dbPuzzle[2];
 		this.failureMessage = dbPuzzle[3];
-        this.completedPuzzle = Integer.parseInt(dbPuzzle[4]);
     }
 
 	/**
@@ -76,27 +74,27 @@ public class Puzzle
 		return successMessage;
 	}
 
-    /**This method manages the interaction with any given puzzle
+    /**This method manages the interaction with the puzzle
+     * @param userInput The user's response to the puzzle challenge
+     * @return Success, failure, changeRooms, or roomSummary messages
      */
     public String solvePuzzle(String userInput)
     {
         if (!failed)
         {
-            //compares the solution to the answer
+            //compares the user solution to the correct answer
             if (getSolution().equalsIgnoreCase(userInput))  //cleared
             {
                 Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).setIsPuzzle(0);
 
-                if (Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsMonster() > 0)  //did a monster appear?
-                {
-                    return getSuccessMessage() + MenusAndMessages.roomSummaryMessage(); //"\n\nAre you going to fight the monster? (yes/no)";
-                }
-                else if (Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsArmor() > 0 || Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsWeapon() > 0 ||
-                        Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsElixir() > 0)  //did an item appear?
+                if (Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsMonster() > 0||
+                        Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsArmor() > 0 ||
+                        Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsWeapon() > 0 ||
+                        Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsElixir() > 0)//did an item or monster appear?
                 {
                     return getSuccessMessage() + MenusAndMessages.roomSummaryMessage(); //"\n\nThere is an item to collect. Are you going to collect it? (yes/no)";
                 }
-                else  //is the room completely empty?
+                else //is the room completely empty?
                 {
                     return getSuccessMessage() + "\n\n" + MenusAndMessages.changeRoomsMessage();
                 }
@@ -106,7 +104,7 @@ public class Puzzle
                 return getFailureMessage() + "\nTry puzzle again? (yes/no)";  //somehow based on this call puzzleMessage()
             }
         }
-        else
+        else //for failing the puzzle
         {
             if (userInput.equalsIgnoreCase("yes"))  //try again  \\CLEARED
             {

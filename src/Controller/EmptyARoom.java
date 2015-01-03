@@ -6,9 +6,9 @@ package Controller;
  * Course: ITEC 3150 Fall 2014
  * Written: 1/2/2015
  *
- * This class represents a ...
+ * This class represents a feature to set a room empty
  *
- * Purpose: Allows the manipulation of a ...
+ * Purpose: To declare a visited and empty room as visited and empty.
  */
 public class EmptyARoom
 {

@@ -37,7 +37,7 @@ public class Database
         }
 
         //Build the URL for SQLite DB
-        String database = "DragonsKeep.db";
+        String database = "./libs/DragonsKeep.db";
         String jdbc = "jdbc:sqlite";
         String dbURL = jdbc + ":" + database;
 

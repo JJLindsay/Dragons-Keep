@@ -1,7 +1,5 @@
 package Controller;
 
-import Model.*;
-
 /**
  * author: JJ Lindsay
  * version: 4.2.1
@@ -15,20 +13,11 @@ import Model.*;
 public class GameInteractions
 {
     //static instance variables
-    private static Armor armor;
-    private static Weapon weapon;
-    private static Elixir elixir;
+    private static Hero player = AccountFunctions.getHero();
 
-    //NEW
-    private static Puzzle puzzle;
-    private static Monster monster;
-    private static boolean failed = false;
-    private static Hero player;
-    private static boolean startingUp = true;
-
-    /**This method welcomes the Hero and points to login() or CreateAccount() depending on the Hero's actions
+    /**Interprets the user's response and points them to login() or CreateAccount()
      */
-    public static String playGame(String userInput)
+    public static String titleScreenInput(String userInput)
     {
         if (userInput.equalsIgnoreCase("1"))
         {
@@ -42,7 +31,7 @@ public class GameInteractions
         }
         else
         {
-            return "Error interpreting your last request" + "\n\n" + MenusAndMessages.gameIntro();
+            return "Error interpreting your last request" + "\n\n" + MenusAndMessages.titleScreen();
         }
     }
 
@@ -70,14 +59,16 @@ public class GameInteractions
      */
     public static String battle(String userInput)
     {
-        //compares the user response against possible choices
+        Monster monster = new Monster();
+
+        //checks the player's response against a minimum length
         if (userInput.length() > 5)
         {
             if (userInput.equalsIgnoreCase("inventory"))  //cleared
             {
                 return player.getInventory().view() + "\n" + MenusAndMessages.battleMessage();
             }
-            else if (userInput.length() > 5 && userInput.substring(0, 5).equalsIgnoreCase("equip"))
+            else if (userInput.substring(0, 5).equalsIgnoreCase("equip"))
             {
                 //check if the item exist in inventory
                 if (player.getInventory().confirmItem(userInput.substring(6)))
@@ -160,7 +151,7 @@ public class GameInteractions
                         player.setHealth((player.getHealth() + player.getDefenseStrength()) - monster.getAttackPower());
                     }
                     return attackResults + "\n\n" + MenusAndMessages.battleMessage();
-                } else  //Hero dies  ------cleared
+                } else  //Hero dies
                 {
                     attackResults +=  "\n\nYour losing a lot of blood, you don't know how." + monster.getName() + "attacked you so fast! \nYour stumbling towards the door..." +
                             "\nyou've got to get out of here, you think to yourself.\nIt's no use. You collapse on the ground before even reaching door. Just before everything" +
@@ -169,7 +160,7 @@ public class GameInteractions
                     attackResults += "\n---------------GAME OVER-----------------\n";
                     attackResults += "\n*****************************************";
 
-                    return attackResults + "\n\n" + MenusAndMessages.gameIntro();
+                    return attackResults + "\n\n" + MenusAndMessages.titleScreen();
                 }
             } else if (userInput.equalsIgnoreCase("run away"))
             {

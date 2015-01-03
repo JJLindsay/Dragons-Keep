@@ -6,28 +6,37 @@ package Controller;
  * Course: ITEC 3150 Fall 2014
  * Written: 1/2/2015
  *
- * This class represents a ...
+ * This class represents all the messages and menus offered to the user.
  *
- * Purpose: Allows the manipulation of a ...
+ * Purpose: Allows the user to navigate the various options in the game.
  */
 public class MenusAndMessages
 {
     //static instance variables
-    //NEW
+    //These are static so Hero and startup are remembered on every visit to this class
     private static Hero player;
     private static boolean startingUp = true;
 
-    public static String gameIntro()
+    /**The title screen message and login or create request
+     * @return The title screen message and login or create request
+     */
+    public static String titleScreen()
     {
         return "Welcome to Dragon's Keep!" +
                 "\nEnter 1 to login or 2 to create a new account";  //Game welcome message
     }
 
+    /**A quit game question
+     * @return The quit game question
+     */
     public static String quitGameMessage()
     {
         return "Do you want to save your game before closing? (yes/no)";
     }
 
+    /**Summarizes the enteredRoomMessage by leaving out the room description
+     * @return A request for user action
+     */
     public static String roomSummaryMessage()
     {
         if (2 == Rooms.getCurrentRoom() && player.getInventory() == null)
@@ -49,9 +58,14 @@ public class MenusAndMessages
         }
     }
 
+    /**Provides a description of the room and either requests the user's next action or provides the change
+     * rooms menu
+     * @return description of the room and a question or a the change rooms menu
+     */
     public static String enteredRoomMessage()
     {
-        //retrieves the user HERO from AccountFunctions
+        //retrieves the user's HERO from AccountFunctions
+        //this occurs only once after a successful login/create
         if (startingUp)
         {
             player = AccountFunctions.getHero();
@@ -87,6 +101,9 @@ public class MenusAndMessages
         }
     }
 
+    /**A message that displays what exits are available to exit the current room
+     * @return roomDirection The exit room message
+     */
     public static String changeRoomsMessage()
     {
         //display possible exits
@@ -117,6 +134,9 @@ public class MenusAndMessages
         return roomDirection + "Where would you like to go next or enter \"menu\" to pull up the game menu.";
     }
 
+    /**This is th main menu the player can call at almost anytime to access a variety of options
+     * @return message The main menu
+     */
     public static String mainMenuMessage()
     {
         String message = "-----------------------------------------";
@@ -129,12 +149,9 @@ public class MenusAndMessages
         return message;
     }
 
-    public static String puzzleMessage()
-    {
-        Puzzle puzzle = new Puzzle();
-        return puzzle.getPuzzle();  //somehow based on this call solvePuzzle()
-    }
-
+    /**Provides the menu that appears before every enemy encounter
+     * @return battleMessage The battle menu
+     */
     public static String battleMessage()
     {
         Monster monster = new Monster();

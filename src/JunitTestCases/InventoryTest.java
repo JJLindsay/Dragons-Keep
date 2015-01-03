@@ -32,9 +32,9 @@ public class InventoryTest
     {
         inventory = new Inventory();
 
-        weapon = new Weapon("testWeapon", 27);
-        armor = new Armor("testArmor", 14);
-        elixir = new Elixir("testElixir", 9);
+        weapon = new Weapon();
+        armor = new Armor();
+        elixir = new Elixir();
 
         inventory.add(weapon);
         inventory.add(armor);

@@ -3,8 +3,8 @@ package Controller;
 import Model.LoadEntity;
 
 /**
- * author: Thaonguyen Nguyen
- * version: 1.0
+ * author: Thaonguyen Nguyen and JJ Lindsay
+ * version: 2.0
  * Course: ITEC 3860 Fall 2014
  * Written: 11/16/2014
  *
@@ -20,9 +20,6 @@ public class Hero extends Actor
 	private  int score;
 	private  int defenseStrength;
 
-    //NEW
-    String[] loginDetails = null;
-
     /**Two argument constructor
      * @param name The Hero's name
      * @param playerID The Hero's database primary key
@@ -35,27 +32,16 @@ public class Hero extends Actor
         this.playerID = playerID;
 	}
 
-    /**Four argument constructor
-     * @param playerID The Hero's database primary key
-     * @param name The Hero's name
-     * @param score The Hero's score
-     * @param health The Hero's health
+    /**
+     * Creates a Hero from the database
+     * @param heroName The name associated with the player profile in the database
      */
-	public Hero(int playerID, String name, int score, int health) {
-		super(name, health);
-        this.playerID = playerID;
-        this.score = score;
-        inventory = null;  //create inventory will update this.
-	}
-
-    //NEW
-    //for retrieving saved files and inventory
     public Hero(String heroName)
     {
         super(heroName);
 
         //get saved player data
-        loginDetails = LoadEntity.loadHero(heroName).split("[|]");
+        String[] loginDetails = LoadEntity.loadHero(heroName).split("[|]");
 
         //create player with ID, name, score, and health from saved information
         this.score = Integer.parseInt(loginDetails[3]);
@@ -69,16 +55,19 @@ public class Hero extends Actor
         }
         else
             this.inventory = null;
-
     }
 
-    /**Creates a Hero's inventory
+    /**Creates an empty inventory
      */
 	public  void createInventory()
     {
         inventory = new Inventory();
 	}
 
+    /**
+     * Creates and populates a player's saved inventory
+     * @param playerID The ID to identify the user's inventory in the database
+     */
     public  void createInventory(int playerID)
     {
         int p = 0;
@@ -89,30 +78,24 @@ public class Hero extends Actor
             //checks if a weaponID exists
             if (!heroInventory[p].equalsIgnoreCase("0"))
             {
-                //get the weapon from the database
-                String[] dbWeapon = LoadEntity.retrieveWeapon(Integer.parseInt(heroInventory[p])).split("[|]");
                 //builds an weapon(name, strength)
-                Weapon weapon = new Weapon(dbWeapon[0], Integer.parseInt(dbWeapon[1]));
+                Weapon weapon = new Weapon();
                 //adds it to inventory
                 this.getInventory().add(weapon);
             }
             //checks if a armorID exists
             else if (!heroInventory[p + 1].equalsIgnoreCase("0"))
             {
-                //get the armor from the database
-                String[] dbArmor = LoadEntity.retrieveArmor(Integer.parseInt(heroInventory[p + 1])).split("[|]");
                 //builds an armor(name, defenseBoost)
-                Armor armor = new Armor(dbArmor[0], Integer.parseInt(dbArmor[1]));
+                Armor armor = new Armor();
                 //adds it to inventory
                 this.getInventory().add(armor);
             }
             //checks if a elixirID exists
             else if (!heroInventory[p + 2].equalsIgnoreCase("0"))
             {
-                //get the elixir from the database
-                String[] dbElixir = LoadEntity.retrieveElixir(Integer.parseInt(heroInventory[p + 2])).split("[|]");
                 //builds an elixir(name, healthBoost)
-                Elixir elixir = new Elixir(dbElixir[0], Integer.parseInt(dbElixir[1]));
+                Elixir elixir = new Elixir();
                 //adds it to inventory
                 this.getInventory().add(elixir);
             }
@@ -169,10 +152,5 @@ public class Hero extends Actor
     public  void setPlayerID(int playerID)
     {
         this.playerID = playerID;
-    }
-
-    public Hero getHero()
-    {
-        return this;
     }
 }

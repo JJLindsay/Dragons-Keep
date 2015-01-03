@@ -3,8 +3,8 @@ package Controller;
 import Model.LoadEntity;
 
 /**
- * author: Thaonguyen Nguyen
- * version: 1.0
+ * author: Thaonguyen Nguyen and JJ Lindsay
+ * version: 2.0
  * Course: ITEC 3860 Fall 2014
  * Written: 11/16/2014
  *
