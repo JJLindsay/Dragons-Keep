@@ -1,4 +1,9 @@
-package View;
+package view;
+
+import controller.AccountFunctions;
+import controller.itemsAndPuzzle.Weapon;
+
+import java.util.Arrays;
 
 /**
  * author: JJ Lindsay
@@ -14,7 +19,19 @@ public class StartGame
 {
     public static void main(String[] args)
     {
-        View view = new View();
-        view.gameMenus();
+        int num = 1;
+        AccountFunctions.setLoginOrCreateChoice(2);
+        AccountFunctions.loginCreate("InventoryTestName");
+
+        System.out.println("Here is start SOP " + AccountFunctions.getRoomsObj().get(5).getIsWeapon());
+
+        Weapon weapon = new Weapon();
+//        while(num <= 50)
+//        {
+//            System.out.println("Here is start SOP " + AccountFunctions.getRoomsObj().get(num).getIsWeapon());
+//            num++;
+//        }
+//        View view = new View();
+//        view.gameMenus();
     }
 }

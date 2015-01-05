@@ -1,8 +1,6 @@
-package JunitTestCases;
+package junitTestCases;
 
-import Model.DatabaseTest;
-import Model.LoadEntityTest;
-import Model.UpdateEntityTest;
+import model.DatabaseTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

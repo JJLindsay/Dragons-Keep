@@ -1,4 +1,8 @@
-package Controller;
+package controller;
+
+import controller.actors.Hero;
+import controller.actors.Monster;
+import controller.room.Rooms;
 
 /**
  * author: JJ Lindsay
@@ -6,9 +10,9 @@ package Controller;
  * Course: ITEC 3860 Fall 2014
  * Written: 11/16/2014
  *
- * This class represents a game user interface
+ * This class represents a game interactions
  *
- * Purpose: Allows a Hero to play the game and interact with other classes and objects.
+ * Purpose: Allows a player to play/quit game and interact with battle and main menu.
  */
 public class GameInteractions
 {
@@ -120,7 +124,7 @@ public class GameInteractions
                 {
                     attackResults = "You dealt a deadly blow with that last move! You killed " + monster.getName() + ".";
                     //set monster to zero for this room
-                    Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).setIsMonster(0);
+                    AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).setIsMonster(0);
 
                     //Game won message
                     if (50 == Rooms.getCurrentRoom())
@@ -134,8 +138,8 @@ public class GameInteractions
                         return attackResults + "\n\n" + MenusAndMessages.quitGameMessage();
                     }
 
-                    if (Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsArmor() > 0 || Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsWeapon() > 0 ||
-                            Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsElixir() > 0)  //did an item appear?
+                    if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsArmor() > 0 || AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsWeapon() > 0 ||
+                            AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsElixir() > 0)  //did an item appear?
                     {
                         return attackResults + "\n\nThere is an item to collect. Do you want to collect it? (yes/no)";
                     }

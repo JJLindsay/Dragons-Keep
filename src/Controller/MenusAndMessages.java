@@ -1,4 +1,8 @@
-package Controller;
+package controller;
+
+import controller.actors.Hero;
+import controller.actors.Monster;
+import controller.room.Rooms;
 
 /**
  * author: JJ Lindsay
@@ -43,11 +47,11 @@ public class MenusAndMessages
         {
             return "\nAre you going to collect the rucksack? (yes/no)";
         }
-        else if (Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsPuzzle() > 0){
+        else if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsPuzzle() > 0){
             return "\nAre you going to attempt this puzzle? (yes/no)";
         }
         //checks if an monster is in the room
-        else if (Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsMonster() > 0)
+        else if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsMonster() > 0)
         {
             return "\nAre you going to fight the monster? (yes/no)";
         }
@@ -74,30 +78,30 @@ public class MenusAndMessages
 
         if (2 == Rooms.getCurrentRoom() && player.getInventory() == null)
         {
-            return Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getRoomDescription() +
+            return AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getRoomDescription() +
                     "\nAre you going to collect the rucksack? (yes/no)";
         }
-        else if (Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsPuzzle() > 0){
-            return Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getRoomDescription() +
+        else if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsPuzzle() > 0){
+            return AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getRoomDescription() +
                     "\nAre you going to attempt this puzzle? (yes/no)";
         }
         //checks if an monster is in the room
-        else if (Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsMonster() > 0)
+        else if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsMonster() > 0)
         {
-            return Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getRoomDescription() +
+            return AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getRoomDescription() +
                     "\nAre you going to fight the monster? (yes/no)";
         }
         //checks if an item is in the room
-        else if (Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsArmor() > 0 || Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsWeapon() > 0 ||
-                Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsElixir() > 0)
+        else if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsArmor() > 0 || AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsWeapon() > 0 ||
+                AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsElixir() > 0)
         {
-            return Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getRoomDescription() +
+            return AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getRoomDescription() +
                     "\nThere is an item to collect. Are you going to collect it? (yes/no)";
         }
         else  //if the room is empty
         {
             //Displays the current room description
-            return Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getRoomDescription() + "\n\n" + changeRoomsMessage();
+            return AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getRoomDescription() + "\n\n" + changeRoomsMessage();
         }
     }
 
@@ -112,7 +116,7 @@ public class MenusAndMessages
         for (int x = 0; x < 4; x++)
         {
             //if an exit exist
-            if (Integer.parseInt(Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getChoices()[x]) != 0)
+            if (Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[x]) != 0)
             {
                 if (x == 0)
                 {

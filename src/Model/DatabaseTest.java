@@ -1,4 +1,6 @@
-package Model;
+package model;
+
+import controller.AccountDB;
 
 import org.junit.*;
 
@@ -25,17 +27,17 @@ public class DatabaseTest
     @Test
     public void testCreateAccount() throws Exception
     {
-        assertTrue(Database.createAccount("createTestName") > 0);
+        assertTrue(AccountDB.createAccount("createTestName") > 0);
     }
 
     @Test
     public void testLoginAccount() throws Exception
     {
-        assertTrue(Database.loginAccount("createTestName"));
+        assertTrue(AccountDB.loginAccount("createTestName"));
 
-        assertFalse(Database.loginAccount(null));
-        assertFalse(Database.loginAccount(""));
-        assertFalse(Database.loginAccount(" "));
+        assertFalse(AccountDB.loginAccount(null));
+        assertFalse(AccountDB.loginAccount(""));
+        assertFalse(AccountDB.loginAccount(" "));
     }
 
     @Test

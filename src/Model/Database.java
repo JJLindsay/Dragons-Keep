@@ -1,10 +1,10 @@
-package Model;
+package model;
 
 import java.sql.*;
 
 /**
  * author: JJ Lindsay
- * version: 2.0
+ * version: 2.1
  * Course: ITEC 3860 Fall 2014
  * Written: 11/16/2014
  *
@@ -17,13 +17,13 @@ public class Database
     //instance variables
     private static Statement stmt;
     private static ResultSet rs = null;
-    private static Database tdb = new Database();
-    private static boolean duplicateKey = true;
-    private static int caKey = 1;
+//    private static Database tdb = new Database();
+//    private static boolean duplicateKey = true;
+//    private static int caKey = 1;
 
     /**No argument constructor
      */
-    protected Database()
+    public Database()
     {
         //register the driver name
         String sDriver = "org.sqlite.JDBC";
@@ -59,75 +59,11 @@ public class Database
         }
     }
 
-    /**verifies the user account
-     * @param playerName The player name
-     * @return true/false If logging in succeeds or fails
-     */
-    public static boolean loginAccount(String playerName)
-    {
-        try
-        {
-            //Query the database. Returns the results in a ResultSet
-            rs = tdb.query("Select name from playerFile");
-
-            //Loop over the result set. next moves the cursor to the next record and returns the current record
-            while(rs.next())
-            {
-                if (playerName != null && playerName.equalsIgnoreCase(rs.getString("name")))
-                {
-                    return true;
-                }
-            }
-
-            rs.close();
-            stmt.close();
-        }
-        catch(SQLException sqe)
-        {
-            System.out.println(sqe.getMessage());
-        }
-        return false;
-    }
-
-    /**creates a user profile
-     * @param name The player's name
-     * @return caKey The database primary key associated with this player name
-     */
-    public static int createAccount(String name)
-    {
-        try
-        {
-            do{
-            //BEFORE inserting:: compare user requested name against names already in the db
-
-                //the value returned is the number of effected rows (for us its either 0 or 1)
-                int err = tdb.modData("Insert into playerFile (playerID, name, hasInventory, score, health) " +
-                        "values (" + caKey + ", \'" + name + "\'," + 0 + "," + 0 + "," + 100 + ")");
-
-                //If 0 rows were effected
-                if (err == 0)
-                {
-                    caKey++;
-                }
-                else
-                {
-                    duplicateKey = false;
-                }
-           }while (duplicateKey);
-
-            stmt.close();
-        } catch (SQLException sqe)
-        {
-            System.out.println(sqe.getMessage());
-        }
-        return caKey;
-    }
-
     /**Allows for querying the database
      * @param sql database query statement
      * @return rs The results from the query
      */
-    protected ResultSet query(String sql)
+    public ResultSet query(String sql)
     {
         rs = null;
         try
@@ -145,7 +81,7 @@ public class Database
      * @param sql database modification statement
      * @return num the number of changed rows
      */
-    protected int modData(String sql)
+    public int modData(String sql)
     {
         //default value nothing is changed, 0.
         int num = 0;

@@ -1,4 +1,10 @@
-package Controller;
+package controller;
+
+import controller.room.Rooms;
+import controller.actors.Hero;
+import controller.itemsAndPuzzle.Armor;
+import controller.itemsAndPuzzle.Elixir;
+import controller.itemsAndPuzzle.Weapon;
 
 /**
  * author: JJ Lindsay
@@ -20,20 +26,20 @@ public class ItemCollection
     public static String collectItem()
     {
         //collect the armor in the room
-        if (Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsArmor() > 0)
+        if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsArmor() > 0)
         {
             Armor armor = new Armor();
             player.getInventory().add(armor);
-            Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).setIsArmor(0);
+            AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).setIsArmor(0);
 
             return "You have found " + armor.getItemName() + " and added it to your inventory." + "\n\n" + MenusAndMessages.changeRoomsMessage();
         }
         //collect the elixir in the room
-        else if (Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).getIsElixir() > 0)
+        else if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsElixir() > 0)
         {
             Elixir elixir = new Elixir();
             player.getInventory().add(elixir);
-            Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).setIsElixir(0);
+            AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).setIsElixir(0);
 
             return "You have found " + elixir.getItemName() + " and added it to your inventory." + "\n\n" + MenusAndMessages.changeRoomsMessage();
         }
@@ -42,7 +48,7 @@ public class ItemCollection
         {
             Weapon weapon = new Weapon();
             player.getInventory().add(weapon);
-            Rooms.getRoomsMap().get(Rooms.getCurrentRoom()).setIsWeapon(0);
+            AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).setIsWeapon(0);
 
             return "You have found " + weapon.getItemName() + " and added it to your inventory." + "\n\n" + MenusAndMessages.changeRoomsMessage();
         }

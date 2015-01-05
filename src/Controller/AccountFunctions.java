@@ -1,7 +1,13 @@
-package Controller;
+package controller;
 
-import Model.Database;
-import Model.UpdateEntity;
+import controller.actors.Hero;
+import controller.inventory.InventoryDB;
+import controller.room.BuildRooms;
+import controller.room.Rooms;
+import controller.actors.ActorDB;
+import controller.room.RoomsDB;
+
+import java.util.Map;
 
 /**
  * author: JJ Lindsay
@@ -9,7 +15,7 @@ import Model.UpdateEntity;
  * Course: ITEC 3150 Fall 2014
  * Written: 1/2/2015
  *
- * This class represents the features of an account.
+ * This class represents account features.
  *
  * Purpose: To provide the ability to log-in, create, and save an account. In addition, getHero() enables one Hero
  * to be created and shared amongst all classes.
@@ -19,22 +25,30 @@ public class AccountFunctions
     private static Hero player;
     private static int loginOrCreateChoice;
     private static boolean accountExist;
+//    private static Rooms rooms;
+    private static Map<Integer, Rooms> rooms;
+
+
 
     /**This manages the login & create-account
      * @return a room description if successful or the game Title screen if the login/create-account is unsuccessful
      */
     public static String loginCreate(String loginName)
     {
+        System.out.println("4TH S0P: " + "entered loginCreate" );  //DEBUG
+
         if (1 == loginOrCreateChoice)
         {
             //verify user account exist
-            if (Database.loginAccount(loginName))
+            if (AccountDB.loginAccount(loginName))
             {
                 //account existed prior
                 accountExist = true;
                 player = new Hero(loginName);
 
-                new Rooms(player.getPlayerID(), true);
+                rooms = BuildRooms.buildRooms(player.getPlayerID(), true);  //CHANGED
+                System.out.println("3rd SOP " + rooms.get(11).getRoomDescription());  //DEBUG
+
                 return "Account located. Loading game..." + "\n\n" + MenusAndMessages.enteredRoomMessage();
             } else
             {
@@ -43,14 +57,16 @@ public class AccountFunctions
         }
         else if (2 == loginOrCreateChoice)
         {
-            if (!Database.loginAccount(loginName))
+            if (!AccountDB.loginAccount(loginName))
             {
                 //account did not exist prior
                 accountExist = false;
                 //defaults to playerID 0 until save is called
                 player = new Hero(loginName, 0);
 
-                new Rooms(0, false);
+                rooms = BuildRooms.buildRooms(0, false);  //CHANGED
+                System.out.println("5th SOP " + rooms.get(11).getRoomDescription());  //DEBUG
+
                 return "Your account was created!" + "\n\n" + MenusAndMessages.enteredRoomMessage();
             }
             return "ERROR! An account with that name already exist." + "\n\n" + MenusAndMessages.titleScreen();
@@ -66,7 +82,7 @@ public class AccountFunctions
         //Creates an Account in the database and sets the ID if the user did not login at the game's start
         if (!accountExist)
         {
-            player.setPlayerID(Database.createAccount(player.getName()));
+            player.setPlayerID(AccountDB.createAccount(player.getName()));
             accountExist = true;
         }
 
@@ -83,16 +99,16 @@ public class AccountFunctions
         heroData += player.getScore() + "|" + player.getHealth();
 
         //saves the player ID, name, hasInventory, score, and health to the database
-        UpdateEntity.saveHeroData(heroData);
+        ActorDB.saveHeroData(heroData);
 
         //saves the player's inventory
-        UpdateEntity.saveHeroInventory(player.getPlayerID(), player.getInventory().getRuckSack());
+        InventoryDB.saveHeroInventory(player.getPlayerID(), player.getInventory().getRuckSack());
 
         //saves the state of all the rooms for this player
         String savedRooms = player.getPlayerID() + "|" + Rooms.getCurrentRoom();
         for (int i = 1; i <= 50;  i++)
         {
-            if (Rooms.getRoomsMap().get(i).getIsEmpty() == 0)
+            if (rooms.get(i).getIsEmpty() == 0)
             {
                 savedRooms += "|" + 0;
             }
@@ -101,7 +117,7 @@ public class AccountFunctions
                 savedRooms += "|" + 1;
             }
         }
-        UpdateEntity.saveRoomState(savedRooms);
+        RoomsDB.saveRoomState(savedRooms);
     }
 
     /**
@@ -119,5 +135,10 @@ public class AccountFunctions
     public static Hero getHero()
     {
         return player;
+    }
+
+    public static Map<Integer, Rooms> getRoomsObj()
+    {
+        return rooms;
     }
 }

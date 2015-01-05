@@ -1,12 +1,17 @@
-package JunitTestCases;
+package junitTestCases;
 
-import Controller.Inventory;
-import Controller.Weapon;
-import Controller.Armor;
-import Controller.Elixir;
+import controller.AccountFunctions;
+import controller.inventory.Inventory;
+import controller.itemsAndPuzzle.ItemDB;
+import controller.itemsAndPuzzle.Weapon;
+import controller.itemsAndPuzzle.Armor;
+import controller.itemsAndPuzzle.Elixir;
 
+import controller.room.Rooms;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -26,18 +31,34 @@ public class InventoryTest
     Weapon weapon;
     Armor armor;
     Elixir elixir;
+    private Map<Integer, Rooms> rooms = AccountFunctions.getRoomsObj();
 
     @Before
     public void setUp() throws Exception
     {
+        AccountFunctions.setLoginOrCreateChoice(2);
+        AccountFunctions.loginCreate("InventoryTestName");
+//        Rooms.setRoomsMap(temporary.getTemp());
+
+//        rooms = new Rooms(0, false);
         inventory = new Inventory();
 
-        weapon = new Weapon();
-        armor = new Armor();
-        elixir = new Elixir();
+//        //get an weapon from the database
+//        String[] dbWeapon = ItemDB.retrieveWeapon(rooms.get(3).getIsWeapon()).split("[|]");
+//        //builds an weapon(name, strength)
+//        weapon = new Weapon(dbWeapon[0], Integer.parseInt(dbWeapon[1]));
+//        inventory.add(weapon);
 
+        Rooms.setCurrentRoom(3);
+        weapon = new Weapon();
         inventory.add(weapon);
+
+        Rooms.setCurrentRoom(25);
+        armor = new Armor();
         inventory.add(armor);
+
+        Rooms.setCurrentRoom(6);
+        elixir = new Elixir();
         inventory.add(elixir);
     }
 
@@ -62,7 +83,7 @@ public class InventoryTest
     @Test
     public void testGetWeapon() throws Exception
     {
-        assertEquals(weapon, inventory.getWeapon("testWeapon"));
+        assertEquals(weapon, inventory.getWeapon("dagger"));
 
         assertNotEquals(weapon, inventory.getWeapon(null));
         assertNotEquals(weapon, inventory.getWeapon(""));
@@ -72,7 +93,7 @@ public class InventoryTest
     @Test
     public void testGetElixir() throws Exception
     {
-        assertEquals(elixir, inventory.getElixir("testElixir"));
+        assertEquals(elixir, inventory.getElixir("Blue Elixir"));
 
         assertNotEquals(elixir, inventory.getWeapon(null));
         assertNotEquals(elixir, inventory.getWeapon(""));
@@ -82,7 +103,7 @@ public class InventoryTest
     @Test
     public void testGetArmor() throws Exception
     {
-        assertEquals(armor, inventory.getArmor("testArmor"));
+        assertEquals(armor, inventory.getArmor("Dragon Scales"));
 
         assertNotEquals(armor, inventory.getArmor(null));
         assertNotEquals(armor, inventory.getArmor(""));
@@ -92,9 +113,9 @@ public class InventoryTest
     @Test
     public void testConfirmItem() throws Exception
     {
-        assertTrue(inventory.confirmItem("testWeapon"));
-        assertTrue(inventory.confirmItem("testElixir"));
-        assertTrue(inventory.confirmItem("testArmor"));
+        assertTrue(inventory.confirmItem("dagger"));
+        assertTrue(inventory.confirmItem("Blue Elixir"));
+        assertTrue(inventory.confirmItem("Dragon Scales"));
 
         assertFalse(inventory.confirmItem("weapon"));
         assertFalse(inventory.confirmItem("elixir"));
@@ -110,13 +131,13 @@ public class InventoryTest
     {
         inventory.view();
 
-        assertEquals("w", inventory.getItemType("testWeapon"));
-        assertEquals("e", inventory.getItemType("testElixir"));
-        assertEquals("a", inventory.getItemType("testArmor"));
+        assertEquals("w", inventory.getItemType("dagger"));
+        assertEquals("e", inventory.getItemType("Blue Elixir"));
+        assertEquals("a", inventory.getItemType("Dragon Scales"));
 
-        assertNotEquals("a", inventory.getItemType("testWeapon"));
-        assertNotEquals("w", inventory.getItemType("testElixir"));
-        assertNotEquals("e", inventory.getItemType("testArmor"));
+        assertNotEquals("a", inventory.getItemType("dagger"));
+        assertNotEquals("w", inventory.getItemType("Blue Elixir"));
+        assertNotEquals("e", inventory.getItemType("Dragon Scales"));
 
         assertNotEquals("a", inventory.getItemType(null));
         assertNotEquals("w", inventory.getItemType(""));
@@ -126,9 +147,9 @@ public class InventoryTest
     @Test
     public void testRemove() throws Exception
     {
-        assertTrue(inventory.remove("testWeapon"));
-        assertTrue(inventory.remove("testElixir"));
-        assertTrue(inventory.remove("testArmor"));
+        assertTrue(inventory.remove("dagger"));
+        assertTrue(inventory.remove("Blue Elixir"));
+        assertTrue(inventory.remove("Dragon Scales"));
 
         assertFalse(inventory.remove("armorIV"));
         assertFalse(inventory.remove(null));
@@ -139,15 +160,15 @@ public class InventoryTest
     @Test
     public void testRemoveQuery() throws Exception
     {
-        assertTrue(inventory.remove("testElixir"));
+        assertTrue(inventory.remove("Blue Elixir"));
 
-        assertNotEquals("e", inventory.getItemType("testElixir"));
-        assertFalse(inventory.confirmItem("testElixir"));
+        assertNotEquals("e", inventory.getItemType("Blue Elixir"));
+        assertFalse(inventory.confirmItem("Blue Elixir"));
 
-        assertTrue(inventory.confirmItem("testWeapon"));
-        assertTrue(inventory.confirmItem("testArmor"));
+        assertTrue(inventory.confirmItem("dagger"));
+        assertTrue(inventory.confirmItem("Dragon Scales"));
 
-        assertEquals("w", inventory.getItemType("testWeapon"));
-        assertEquals("a", inventory.getItemType("testArmor"));
+        assertEquals("w", inventory.getItemType("dagger"));
+        assertEquals("a", inventory.getItemType("Dragon Scales"));
     }
 }

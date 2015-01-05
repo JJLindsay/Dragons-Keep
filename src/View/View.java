@@ -1,7 +1,10 @@
-package View;
+package view;
 
-import Controller.GameInteractions;
-import Controller.*;
+import controller.GameInteractions;
+import controller.*;
+import controller.RoomInteractions;
+import controller.itemsAndPuzzle.Puzzle;
+
 import java.util.Scanner;
 
 /**
@@ -10,7 +13,7 @@ import java.util.Scanner;
  * Course: ITEC 3150 Fall 2014
  * Written: 12/23/2014
  *
- * This class represents the View in Model-View-Controller
+ * This class represents the view in model-view-controller
  *
  * Purpose: To pose the user a question or to receive an answer. Also, it restricts the user's access to the bare minimum
  */
@@ -89,7 +92,7 @@ public class View
      */
     private void moveLocationMenu()
     {
-        display = RoomChangesAndInteractions.changingRooms(response);  //calls roomInteractions for room description
+        display = RoomInteractions.changingRooms(response);  //calls roomInteractions for room description
         showDisplayAndRespond();
 
         gameMenus();
@@ -99,7 +102,7 @@ public class View
      */
     private void enteringRoomMenu()
     {
-        display = RoomChangesAndInteractions.roomInteractions(response);  //allows room interaction:: enter room response, initially rucksack, received changedRoomsMessage()
+        display = RoomInteractions.roomInteractions(response);  //allows room interaction:: enter room response, initially rucksack, received changedRoomsMessage()
         showDisplayAndRespond();
 
         gameMenus();
@@ -159,7 +162,7 @@ public class View
         response = keyboard.nextLine();  //user responds
     }
 
-    /**Allows Inventory methods in the Controller package with return types other than string to send a message to View
+    /**Allows Inventory methods in the controller package with return types other than string to send a message to view
      * @param controllerDisplay The message to be displayed
      */
     public static void setControllerDisplay(String controllerDisplay)
