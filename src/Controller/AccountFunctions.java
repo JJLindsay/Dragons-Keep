@@ -2,7 +2,6 @@ package controller;
 
 import controller.actors.Hero;
 import controller.inventory.InventoryDB;
-import controller.room.BuildRooms;
 import controller.room.Rooms;
 import controller.actors.ActorDB;
 import controller.room.RoomsDB;
@@ -25,8 +24,7 @@ public class AccountFunctions
     private static Hero player;
     private static int loginOrCreateChoice;
     private static boolean accountExist;
-//    private static Rooms rooms;
-    private static Map<Integer, Rooms> rooms;
+    private static Map<Integer, Rooms> roomsMap;
 
 
 
@@ -35,8 +33,6 @@ public class AccountFunctions
      */
     public static String loginCreate(String loginName)
     {
-        System.out.println("4TH S0P: " + "entered loginCreate" );  //DEBUG
-
         if (1 == loginOrCreateChoice)
         {
             //verify user account exist
@@ -46,8 +42,8 @@ public class AccountFunctions
                 accountExist = true;
                 player = new Hero(loginName);
 
-                rooms = BuildRooms.buildRooms(player.getPlayerID(), true);  //CHANGED
-                System.out.println("3rd SOP " + rooms.get(11).getRoomDescription());  //DEBUG
+                new Rooms(player.getPlayerID(), true);  //CHANGED
+                roomsMap = Rooms.getRoomsMap();
 
                 return "Account located. Loading game..." + "\n\n" + MenusAndMessages.enteredRoomMessage();
             } else
@@ -64,8 +60,8 @@ public class AccountFunctions
                 //defaults to playerID 0 until save is called
                 player = new Hero(loginName, 0);
 
-                rooms = BuildRooms.buildRooms(0, false);  //CHANGED
-                System.out.println("5th SOP " + rooms.get(11).getRoomDescription());  //DEBUG
+                new Rooms(0, false);  //CHANGED
+                roomsMap = Rooms.getRoomsMap();
 
                 return "Your account was created!" + "\n\n" + MenusAndMessages.enteredRoomMessage();
             }
@@ -105,10 +101,10 @@ public class AccountFunctions
         InventoryDB.saveHeroInventory(player.getPlayerID(), player.getInventory().getRuckSack());
 
         //saves the state of all the rooms for this player
-        String savedRooms = player.getPlayerID() + "|" + Rooms.getCurrentRoom();
+        String savedRooms = player.getPlayerID() + "|" + Rooms.getCurrentRoomID();
         for (int i = 1; i <= 50;  i++)
         {
-            if (rooms.get(i).getIsEmpty() == 0)
+            if (roomsMap.get(i).getIsEmpty() == 0)
             {
                 savedRooms += "|" + 0;
             }
@@ -135,10 +131,5 @@ public class AccountFunctions
     public static Hero getHero()
     {
         return player;
-    }
-
-    public static Map<Integer, Rooms> getRoomsObj()
-    {
-        return rooms;
     }
 }

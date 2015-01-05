@@ -1,6 +1,5 @@
 package controller.itemsAndPuzzle;
 
-import controller.AccountFunctions;
 import controller.room.Rooms;
 
 /**
@@ -24,8 +23,7 @@ public class Armor extends Item
 	 */
 	public Armor()
 	{
-		super("");
-        String[] dbArmor = ItemDB.retrieveArmor(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsArmor()).split("[|]");
+        String[] dbArmor = ItemDB.retrieveArmor(Rooms.getCurrentRoom().getIsArmor()).split("[|]");
         this.setItemName(dbArmor[0]);
 		this.armorStrength = Integer.parseInt(dbArmor[1]);
 	}

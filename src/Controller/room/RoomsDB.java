@@ -1,6 +1,7 @@
 package controller.room;
 
 import model.Database;
+import view.View;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -150,11 +151,11 @@ public class RoomsDB
             }
             playerRoomsInsert += " WHERE playerID = " + rooms[0];
             tdb.modData(playerRoomsInsert);
-            System.out.println("Successfully saved the rooms to the database.");
+            View.setControllerDisplay("Successfully saved the rooms to the database.");
         }
         else
         {
-            System.out.println("Successfully saved the rooms to the database.");
+            View.setControllerDisplay("Successfully saved the rooms to the database.");
         }
         return true;
     }

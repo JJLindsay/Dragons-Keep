@@ -1,6 +1,8 @@
 package controller.actors;
 
 import model.Database;
+import view.View;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -108,12 +110,12 @@ public class ActorDB
         //if no rows were changed
         if (err == 0)
         {
-            System.err.println("There was an error in updating saved Hero Data to playerFile");
+            View.setControllerDisplay("There was an error in updating saved Hero Data to playerFile");
             return false;
         }
         else
         {
-            System.out.println("Successfully saved Hero profile to the database.");
+            View.setControllerDisplay("Successfully saved Hero profile to the database.");
         }
         return true;
     }

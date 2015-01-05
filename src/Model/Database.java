@@ -16,8 +16,7 @@ public class Database
 {
     //instance variables
     private static Statement stmt;
-    private static ResultSet rs = null;
-//    private static Database tdb = new Database();
+    //    private static Database tdb = new Database();
 //    private static boolean duplicateKey = true;
 //    private static int caKey = 1;
 
@@ -65,7 +64,7 @@ public class Database
      */
     public ResultSet query(String sql)
     {
-        rs = null;
+        ResultSet rs = null;
         try
         {
             rs = stmt.executeQuery(sql);

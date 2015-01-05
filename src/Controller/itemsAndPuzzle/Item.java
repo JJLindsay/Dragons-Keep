@@ -21,16 +21,6 @@ abstract class Item
     }
 
 	/**
-	 * Method: Constructor for Items class
-	 * Constructor for Items class that has a String as an argument
-	 * @param itemName The item's name
-	 */
-	protected Item(String itemName)
-	{
-		this.itemName = itemName;
-	}
-
-	/**
 	 * Method: getItemName
 	 * @return The current Item name of the object
 	 */

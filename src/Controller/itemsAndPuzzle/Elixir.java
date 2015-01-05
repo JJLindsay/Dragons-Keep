@@ -1,6 +1,5 @@
 package controller.itemsAndPuzzle;
 
-import controller.AccountFunctions;
 import controller.room.Rooms;
 
 /**
@@ -23,9 +22,7 @@ public class Elixir extends Item
 	 */
 	public Elixir()
 	{
-        super("");
-        //get an elixir from the database
-        String[] dbElixir = ItemDB.retrieveElixir(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsElixir()).split("[|]");
+        String[] dbElixir = ItemDB.retrieveElixir(Rooms.getCurrentRoom().getIsElixir()).split("[|]");
         this.setItemName(dbElixir[0]);
         this.healthBoost = Integer.parseInt(dbElixir[1]);
 	}

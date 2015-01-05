@@ -1,6 +1,5 @@
 package controller.itemsAndPuzzle;
 
-import controller.AccountFunctions;
 import controller.MenusAndMessages;
 import controller.room.Rooms;
 
@@ -28,7 +27,7 @@ public class Puzzle
 	public Puzzle()
 	{
         //create and puzzle from the db
-        String[] dbPuzzle = PuzzleDB.retrievePuzzle(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsPuzzle()).split("[|]");
+        String[] dbPuzzle = PuzzleDB.retrievePuzzle(Rooms.getCurrentRoom().getIsPuzzle()).split("[|]");
 
         this.puzzle = dbPuzzle[0];
         this.solution = dbPuzzle[1];
@@ -87,12 +86,12 @@ public class Puzzle
             //compares the user solution to the correct answer
             if (getSolution().equalsIgnoreCase(userInput))  //cleared
             {
-                AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).setIsPuzzle(0);
+                Rooms.getCurrentRoom().setIsPuzzle(0);
 
-                if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsMonster() > 0||
-                        AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsArmor() > 0 ||
-                        AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsWeapon() > 0 ||
-                        AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsElixir() > 0)//did an item or monster appear?
+                if (Rooms.getCurrentRoom().getIsMonster() > 0||
+                        Rooms.getCurrentRoom().getIsArmor() > 0 ||
+                        Rooms.getCurrentRoom().getIsWeapon() > 0 ||
+                        Rooms.getCurrentRoom().getIsElixir() > 0)//did an item or monster appear?
                 {
                     return getSuccessMessage() + MenusAndMessages.roomSummaryMessage(); //"\n\nThere is an item to collect. Are you going to collect it? (yes/no)";
                 }

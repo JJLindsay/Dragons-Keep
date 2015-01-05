@@ -26,20 +26,20 @@ public class ItemCollection
     public static String collectItem()
     {
         //collect the armor in the room
-        if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsArmor() > 0)
+        if (Rooms.getCurrentRoom().getIsArmor() > 0)
         {
             Armor armor = new Armor();
             player.getInventory().add(armor);
-            AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).setIsArmor(0);
+            Rooms.getCurrentRoom().setIsArmor(0);
 
             return "You have found " + armor.getItemName() + " and added it to your inventory." + "\n\n" + MenusAndMessages.changeRoomsMessage();
         }
         //collect the elixir in the room
-        else if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsElixir() > 0)
+        else if (Rooms.getCurrentRoom().getIsElixir() > 0)
         {
             Elixir elixir = new Elixir();
             player.getInventory().add(elixir);
-            AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).setIsElixir(0);
+            Rooms.getCurrentRoom().setIsElixir(0);
 
             return "You have found " + elixir.getItemName() + " and added it to your inventory." + "\n\n" + MenusAndMessages.changeRoomsMessage();
         }
@@ -48,7 +48,7 @@ public class ItemCollection
         {
             Weapon weapon = new Weapon();
             player.getInventory().add(weapon);
-            AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).setIsWeapon(0);
+            Rooms.getCurrentRoom().setIsWeapon(0);
 
             return "You have found " + weapon.getItemName() + " and added it to your inventory." + "\n\n" + MenusAndMessages.changeRoomsMessage();
         }

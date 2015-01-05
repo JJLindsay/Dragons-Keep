@@ -1,6 +1,7 @@
 package controller.inventory;
 
 import model.Database;
+import view.View;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,7 +73,7 @@ public class InventoryDB
             {
                 if (rs.getString("playerID").equalsIgnoreCase("" + playerID))
                 {
-                    int err = tdb.modData("DELETE FROM savedInventory WHERE playerID = " + playerID);
+                    tdb.modData("DELETE FROM savedInventory WHERE playerID = " + playerID);
                     break;
                 }
             }
@@ -180,7 +181,7 @@ public class InventoryDB
                     }
                     else
                     {
-                        System.out.println("Successfully saved Hero inventory to the database.");
+                        View.setControllerDisplay("Successfully saved Hero inventory to the database.");
                         looping = false;
                     }
                 }while(looping);

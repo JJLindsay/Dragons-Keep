@@ -2,7 +2,6 @@ package junitTestCases;
 
 import controller.AccountFunctions;
 import controller.inventory.Inventory;
-import controller.itemsAndPuzzle.ItemDB;
 import controller.itemsAndPuzzle.Weapon;
 import controller.itemsAndPuzzle.Armor;
 import controller.itemsAndPuzzle.Elixir;
@@ -10,8 +9,6 @@ import controller.itemsAndPuzzle.Elixir;
 import controller.room.Rooms;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -31,33 +28,24 @@ public class InventoryTest
     Weapon weapon;
     Armor armor;
     Elixir elixir;
-    private Map<Integer, Rooms> rooms = AccountFunctions.getRoomsObj();
 
     @Before
     public void setUp() throws Exception
     {
         AccountFunctions.setLoginOrCreateChoice(2);
         AccountFunctions.loginCreate("InventoryTestName");
-//        Rooms.setRoomsMap(temporary.getTemp());
 
-//        rooms = new Rooms(0, false);
         inventory = new Inventory();
 
-//        //get an weapon from the database
-//        String[] dbWeapon = ItemDB.retrieveWeapon(rooms.get(3).getIsWeapon()).split("[|]");
-//        //builds an weapon(name, strength)
-//        weapon = new Weapon(dbWeapon[0], Integer.parseInt(dbWeapon[1]));
-//        inventory.add(weapon);
-
-        Rooms.setCurrentRoom(3);
+        Rooms.setCurrentRoomID(3);
         weapon = new Weapon();
         inventory.add(weapon);
 
-        Rooms.setCurrentRoom(25);
+        Rooms.setCurrentRoomID(25);
         armor = new Armor();
         inventory.add(armor);
 
-        Rooms.setCurrentRoom(6);
+        Rooms.setCurrentRoomID(6);
         elixir = new Elixir();
         inventory.add(elixir);
     }

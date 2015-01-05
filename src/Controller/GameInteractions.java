@@ -124,10 +124,10 @@ public class GameInteractions
                 {
                     attackResults = "You dealt a deadly blow with that last move! You killed " + monster.getName() + ".";
                     //set monster to zero for this room
-                    AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).setIsMonster(0);
+                    Rooms.getCurrentRoom().setIsMonster(0);
 
                     //Game won message
-                    if (50 == Rooms.getCurrentRoom())
+                    if (50 == Rooms.getCurrentRoomID())
                     {
                         attackResults += "\nYou have rid Dragons Keep of its corrupted emperor. Thanks to you " + player.getName() + " what evil" +
                         " was brewing just beneath the city wont be unleashed anytime soon...";
@@ -138,8 +138,8 @@ public class GameInteractions
                         return attackResults + "\n\n" + MenusAndMessages.quitGameMessage();
                     }
 
-                    if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsArmor() > 0 || AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsWeapon() > 0 ||
-                            AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsElixir() > 0)  //did an item appear?
+                    if (Rooms.getCurrentRoom().getIsArmor() > 0 || Rooms.getCurrentRoom().getIsWeapon() > 0 ||
+                            Rooms.getCurrentRoom().getIsElixir() > 0)  //did an item appear?
                     {
                         return attackResults + "\n\nThere is an item to collect. Do you want to collect it? (yes/no)";
                     }

@@ -31,28 +31,28 @@ public class RoomInteractions
         {
             return MenusAndMessages.mainMenuMessage();
         }
-        else if (userInput.equalsIgnoreCase("head East") && Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[0]) != 0)
+        else if (userInput.equalsIgnoreCase("head East") && Integer.parseInt(Rooms.getCurrentRoom().getExits()[0]) != 0)
         {
-            Rooms.setCurrentRoom(Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[0]));
+            Rooms.setCurrentRoomID(Integer.parseInt(Rooms.getCurrentRoom().getExits()[0]));
             return MenusAndMessages.enteredRoomMessage();
-        } else if (userInput.equalsIgnoreCase("head NORTH") && Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[1]) != 0)
+        } else if (userInput.equalsIgnoreCase("head NORTH") && Integer.parseInt(Rooms.getCurrentRoom().getExits()[1]) != 0)
         {
-            Rooms.setCurrentRoom(Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[1]));
+            Rooms.setCurrentRoomID(Integer.parseInt(Rooms.getCurrentRoom().getExits()[1]));
             return MenusAndMessages.enteredRoomMessage();
-        } else if (userInput.equalsIgnoreCase("head South") && Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[2]) != 0)
+        } else if (userInput.equalsIgnoreCase("head South") && Integer.parseInt(Rooms.getCurrentRoom().getExits()[2]) != 0)
         {
-            Rooms.setCurrentRoom(Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[2]));
+            Rooms.setCurrentRoomID(Integer.parseInt(Rooms.getCurrentRoom().getExits()[2]));
             return MenusAndMessages.enteredRoomMessage();
-        } else if (userInput.equalsIgnoreCase("head West") && Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[3]) != 0)
+        } else if (userInput.equalsIgnoreCase("head West") && Integer.parseInt(Rooms.getCurrentRoom().getExits()[3]) != 0)
         {
-            Rooms.setCurrentRoom(Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[3]));
+            Rooms.setCurrentRoomID(Integer.parseInt(Rooms.getCurrentRoom().getExits()[3]));
             return MenusAndMessages.enteredRoomMessage();
         }
         // if the user correctly enters a direction but there is no room in that direction.
-        else if (userInput.equalsIgnoreCase("head East") && Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[0]) == 0 ||
-                userInput.equalsIgnoreCase("head NORTH") && Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[1]) == 0 ||
-                userInput.equalsIgnoreCase("head South") && Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[2]) == 0 ||
-                userInput.equalsIgnoreCase("head West") && Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[3]) == 0)
+        else if (userInput.equalsIgnoreCase("head East") && Integer.parseInt(Rooms.getCurrentRoom().getExits()[0]) == 0 ||
+                userInput.equalsIgnoreCase("head NORTH") && Integer.parseInt(Rooms.getCurrentRoom().getExits()[1]) == 0 ||
+                userInput.equalsIgnoreCase("head South") && Integer.parseInt(Rooms.getCurrentRoom().getExits()[2]) == 0 ||
+                userInput.equalsIgnoreCase("head West") && Integer.parseInt(Rooms.getCurrentRoom().getExits()[3]) == 0)
         {
             return "This is embarrassing. You entered: " + userInput + " and walked into a wall. There is no door"
                     + " that way. Try again." + "\n\n" + MenusAndMessages.changeRoomsMessage();
@@ -73,7 +73,7 @@ public class RoomInteractions
     {
         //rucksack is not an item, monster or puzzle and is therefore not represented in the
         //db for the first room except to say the room is not empty. This makes the if below necessary!
-        if (2 == Rooms.getCurrentRoom() && player.getInventory() == null)
+        if (2 == Rooms.getCurrentRoomID() && player.getInventory() == null)
         {
             if (userInput.equalsIgnoreCase("yes"))  
             {
@@ -98,7 +98,7 @@ public class RoomInteractions
             }
         }
         //checks if an puzzle is in the room
-        else if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsPuzzle() > 0)
+        else if (Rooms.getCurrentRoom().getIsPuzzle() > 0)
         {
             if (userInput.equalsIgnoreCase("yes"))  
             {
@@ -114,7 +114,7 @@ public class RoomInteractions
             }
         }
         //checks if an monster is in the room
-        else if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsMonster() > 0)
+        else if (Rooms.getCurrentRoom().getIsMonster() > 0)
         {
             if (userInput.equalsIgnoreCase("yes"))
             {
@@ -129,8 +129,8 @@ public class RoomInteractions
             }
         }
         //checks if an item is in the room
-        else if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsArmor() > 0 || AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsWeapon() > 0 ||
-                AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsElixir() > 0)
+        else if (Rooms.getCurrentRoom().getIsArmor() > 0 || Rooms.getCurrentRoom().getIsWeapon() > 0 ||
+                Rooms.getCurrentRoom().getIsElixir() > 0)
         {
             if (userInput.equalsIgnoreCase("yes"))  
             {

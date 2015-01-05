@@ -1,7 +1,5 @@
 package controller.room;
 
-import controller.AccountFunctions;
-
 /**
  * author: JJ Lindsay
  * version: 1.0
@@ -19,11 +17,11 @@ public class EmptyARoom
     public static void setARoomEmpty()
     {
         //checks if every interaction with this particular room is set to 0
-        if (AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsMonster() == 0 && AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsPuzzle() == 0 &&
-                AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsArmor() == 0 && AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsWeapon() == 0 &&
-                AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getIsElixir() == 0)
+        if (Rooms.getCurrentRoom().getIsMonster() == 0 && Rooms.getCurrentRoom().getIsPuzzle() == 0 &&
+                Rooms.getCurrentRoom().getIsArmor() == 0 && Rooms.getCurrentRoom().getIsWeapon() == 0 &&
+                Rooms.getCurrentRoom().getIsElixir() == 0)
         {
-            AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).setIsEmpty(1);
+            Rooms.getCurrentRoom().setIsEmpty(1);
 
             //Adds direction to the empty rooms
             String roomDirection = "<";
@@ -31,7 +29,7 @@ public class EmptyARoom
             for (int x = 0; x < 4; x++)
             {
                 //if an exit exist
-                if (Integer.parseInt(AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).getExits()[x]) != 0)
+                if (Integer.parseInt(Rooms.getCurrentRoom().getExits()[x]) != 0)
                 {
                     if (x == 0)
                     {
@@ -49,8 +47,7 @@ public class EmptyARoom
                 }
             }
             roomDirection += ">";
-            AccountFunctions.getRoomsObj().get(Rooms.getCurrentRoom()).setRoomDescription(roomDirection + " This room is empty... and it looks a bit familiar.");
+            Rooms.getCurrentRoom().setRoomDescription(roomDirection + " This room is empty... and it looks a bit familiar.");
         }
     }
 }
-
