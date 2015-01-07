@@ -1,5 +1,6 @@
 package controller.actors;
 
+import controller.AccountFunctions;
 import controller.room.Rooms;
 
 /**
@@ -14,14 +15,17 @@ import controller.room.Rooms;
  */
 public class Monster extends Actor
 {
+    private static Rooms rooms = new AccountFunctions().getRooms();
+    private static ActorDB actorDB = Hero.getActorDB();
+
     /**no argument constructor
      */
 	public Monster() {
 		super();
         //create monster
-        String[] dbMonster = ActorDB.retrieveMonster(Rooms.getCurrentRoom().getIsMonster()).split("[|]");
+        String[] dbMonster = actorDB.retrieveMonster(rooms.getCurrentRoom().getIsMonster()).split("[|]");
         this.setName(dbMonster[0]);
-        this.setHealth(Integer.parseInt(dbMonster[1]));
-        this.setAttackPower(Integer.parseInt(dbMonster[2]));
+        this.setAttackPower(Integer.parseInt(dbMonster[1]));
+        this.setHealth(Integer.parseInt(dbMonster[2]));
 	}
 }

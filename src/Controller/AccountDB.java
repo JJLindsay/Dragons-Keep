@@ -1,5 +1,6 @@
 package controller;
 
+import controller.actors.Hero;
 import model.Database;
 
 import java.sql.ResultSet;
@@ -17,20 +18,26 @@ import java.sql.SQLException;
  */
 public class AccountDB
 {
-    private static Database tdb = new Database();
-    private static boolean duplicateKey = true;
-    private static int caKey = 1;
+    private static Database tdb = new Database(); //original
+    private boolean duplicateKey;
+    private int caKey;
+
+    //NEW
+//    private static AccountFunctions accountFunctions;
+
 
     /**verifies the user account
      * @param playerName The player name
      * @return true/false If logging in succeeds or fails
      */
-    public static boolean loginAccount(String playerName)
+    public boolean loginAccount(String playerName)  //Somehow this is creating problems for mod later
     {
+//        tdb = new Database();
+
         try
         {
             //Query the database. Returns the results in a ResultSet
-            ResultSet rs = tdb.query("Select name from playerFile");
+            ResultSet rs = tdb.query("SELECT name FROM playerFile");
 
             //Loop over the result set. next moves the cursor to the next record and returns the current record
             while(rs.next())
@@ -55,14 +62,20 @@ public class AccountDB
      * @param name The player's name
      * @return caKey The database primary key associated with this player name
      */
-    public static int createAccount(String name)
+    public int createAccount(String name)
     {
+        caKey = 1;
+        duplicateKey = true;
+//        Hero player = new AccountFunctions().getHero();
+
+//        tdb = new Database();
+        System.out.println("SAVE #8 In createAccount");
         do{
             //BEFORE inserting:: compare user requested name against names already in the db
 
             //the value returned is the number of effected rows (for us its either 0 or 1)
-            int err = tdb.modData("Insert into playerFile (playerID, name, hasInventory, score, health) " +
-                    "values (" + caKey + ", \'" + name + "\'," + 0 + "," + 0 + "," + 100 + ")");
+            int err = tdb.modData("INSERT INTO playerFile (playerID, name, hasInventory, score, health) " +
+                    "VALUES (" + caKey + ", \'" + name + "\'," + 0 + "," + 0 + "," + 100 + ")");
 
             //If 0 rows were effected
             if (err == 0)
@@ -77,5 +90,10 @@ public class AccountDB
 
 //            stmt.close();
         return caKey;
+    }
+
+    public Database getDatabase()
+    {
+        return tdb;
     }
 }

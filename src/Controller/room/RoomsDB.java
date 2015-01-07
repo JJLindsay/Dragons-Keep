@@ -1,5 +1,6 @@
 package controller.room;
 
+import controller.AccountDB;
 import model.Database;
 import view.View;
 
@@ -19,14 +20,14 @@ import java.sql.SQLException;
 public class RoomsDB
 {
     //instance variables
-    private static ResultSet rs = null;
-    private static Database tdb = new Database();
+    private  ResultSet rs = null;
+    private  Database tdb = new AccountDB().getDatabase();
 
     /**Retrieves the state of the saved rooms
      * @param playerID The player's database ID
      * @return savedRoomBuilder The saved rooms and its attributes
      */
-    public static String loadSavedRooms(int playerID)
+    public String loadSavedRooms(int playerID)
     {
         //creates a stringBuilder for the savedRooms
         StringBuilder savedRoomBuilder = new StringBuilder();
@@ -61,7 +62,7 @@ public class RoomsDB
     /**
      * @return roomBuilder All the rooms and their attributes
      */
-    public static String retrieveAllRooms()
+    public String retrieveAllRooms()
     {
         //creates a stringBuilder for the rooms
         StringBuilder roomBuilder = new StringBuilder();
@@ -121,7 +122,7 @@ public class RoomsDB
      * @param roomsState The empty or not empty state of all the rooms
      * @return true Indicates the rooms were successfully saved in the database
      */
-    public static Boolean saveRoomState(String roomsState)
+    public Boolean saveRoomState(String roomsState)
     {
         String[] rooms = roomsState.split("[|]");
 
@@ -152,6 +153,7 @@ public class RoomsDB
             playerRoomsInsert += " WHERE playerID = " + rooms[0];
             tdb.modData(playerRoomsInsert);
             View.setControllerDisplay("Successfully saved the rooms to the database.");
+
         }
         else
         {

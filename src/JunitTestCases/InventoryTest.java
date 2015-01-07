@@ -32,20 +32,20 @@ public class InventoryTest
     @Before
     public void setUp() throws Exception
     {
-        AccountFunctions.setLoginOrCreateChoice(2);
-        AccountFunctions.loginCreate("InventoryTestName");
+        new AccountFunctions().setLoginOrCreateChoice(2);
+        new AccountFunctions().loginCreate("InventoryTestName");
 
         inventory = new Inventory();
 
-        Rooms.setCurrentRoomID(3);
+        new Rooms().setCurrentRoomID(3);
         weapon = new Weapon();
         inventory.add(weapon);
 
-        Rooms.setCurrentRoomID(25);
+        new Rooms().setCurrentRoomID(25);
         armor = new Armor();
         inventory.add(armor);
 
-        Rooms.setCurrentRoomID(6);
+        new Rooms().setCurrentRoomID(6);
         elixir = new Elixir();
         inventory.add(elixir);
     }

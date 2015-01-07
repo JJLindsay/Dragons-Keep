@@ -16,15 +16,20 @@ import controller.room.Rooms;
  */
 public class MenusAndMessages
 {
-    //static instance variables
-    //These are static so Hero and startup are remembered on every visit to this class
+    //NEW
+//    private AccountFunctions accountFunctions;
+    private static Rooms rooms;
+
+    //instance variables
+    //These are so Hero and startup are remembered on every visit to this class
     private static Hero player;
-    private static boolean startingUp = true;
+    private boolean startingUp = true;
+    private Monster monster;
 
     /**The title screen message and login or create request
      * @return The title screen message and login or create request
      */
-    public static String titleScreen()
+    public String titleScreen()
     {
         return "Welcome to Dragon's Keep!" +
                 "\nEnter 1 to login or 2 to create a new account";  //Game welcome message
@@ -33,7 +38,7 @@ public class MenusAndMessages
     /**A quit game question
      * @return The quit game question
      */
-    public static String quitGameMessage()
+    public String quitGameMessage()
     {
         return "Do you want to save your game before closing? (yes/no)";
     }
@@ -41,17 +46,19 @@ public class MenusAndMessages
     /**Summarizes the enteredRoomMessage by leaving out the room description
      * @return A request for user action
      */
-    public static String roomSummaryMessage()
+    public String roomSummaryMessage()
     {
-        if (2 == Rooms.getCurrentRoomID() && player.getInventory() == null)
+//        player = new AccountFunctions().getHero();
+
+        if (2 == rooms.getCurrentRoomID() && player.getInventory() == null)
         {
             return "\nAre you going to collect the rucksack? (yes/no)";
         }
-        else if (Rooms.getCurrentRoom().getIsPuzzle() > 0){
+        else if (rooms.getCurrentRoom().getIsPuzzle() > 0){
             return "\nAre you going to attempt this puzzle? (yes/no)";
         }
         //checks if an monster is in the room
-        else if (Rooms.getCurrentRoom().getIsMonster() > 0)
+        else if (rooms.getCurrentRoom().getIsMonster() > 0)
         {
             return "\nAre you going to fight the monster? (yes/no)";
         }
@@ -66,49 +73,52 @@ public class MenusAndMessages
      * rooms menu
      * @return description of the room and a question or a the change rooms menu
      */
-    public static String enteredRoomMessage()
+    public String enteredRoomMessage()
     {
+        player = new AccountFunctions().getHero();
+        rooms = new AccountFunctions().getRooms();
+
         //retrieves the user's HERO from AccountFunctions
         //this occurs only once after a successful login/create
-        if (startingUp)
-        {
-            player = AccountFunctions.getHero();
-            startingUp = false;
-        }
+//        if (startingUp)
+//        {
+//            player = accountFunctions.getHero();
+//            startingUp = false;
+//        }
 
-        if (2 == Rooms.getCurrentRoomID() && player.getInventory() == null)
+        if (rooms.getCurrentRoomID() == 2 && player.getInventory() == null)
         {
-            return Rooms.getCurrentRoom().getRoomDescription() +
+            return rooms.getCurrentRoom().getRoomDescription() +
                     "\nAre you going to collect the rucksack? (yes/no)";
         }
-        else if (Rooms.getCurrentRoom().getIsPuzzle() > 0){
-            return Rooms.getCurrentRoom().getRoomDescription() +
+        else if (rooms.getCurrentRoom().getIsPuzzle() > 0){
+            return rooms.getCurrentRoom().getRoomDescription() +
                     "\nAre you going to attempt this puzzle? (yes/no)";
         }
         //checks if an monster is in the room
-        else if (Rooms.getCurrentRoom().getIsMonster() > 0)
+        else if (rooms.getCurrentRoom().getIsMonster() > 0)
         {
-            return Rooms.getCurrentRoom().getRoomDescription() +
+            return rooms.getCurrentRoom().getRoomDescription() +
                     "\nAre you going to fight the monster? (yes/no)";
         }
         //checks if an item is in the room
-        else if (Rooms.getCurrentRoom().getIsArmor() > 0 || Rooms.getCurrentRoom().getIsWeapon() > 0 ||
-                Rooms.getCurrentRoom().getIsElixir() > 0)
+        else if (rooms.getCurrentRoom().getIsArmor() > 0 || rooms.getCurrentRoom().getIsWeapon() > 0 ||
+                rooms.getCurrentRoom().getIsElixir() > 0)
         {
-            return Rooms.getCurrentRoom().getRoomDescription() +
+            return rooms.getCurrentRoom().getRoomDescription() +
                     "\nThere is an item to collect. Are you going to collect it? (yes/no)";
         }
         else  //if the room is empty
         {
             //Displays the current room description
-            return Rooms.getCurrentRoom().getRoomDescription() + "\n\n" + changeRoomsMessage();
+            return rooms.getCurrentRoom().getRoomDescription() + "\n\n" + changeRoomsMessage();
         }
     }
 
     /**A message that displays what exits are available to exit the current room
      * @return roomDirection The exit room message
      */
-    public static String changeRoomsMessage()
+    public String changeRoomsMessage()
     {
         //display possible exits
         String roomDirection = "<";
@@ -116,7 +126,7 @@ public class MenusAndMessages
         for (int x = 0; x < 4; x++)
         {
             //if an exit exist
-            if (Integer.parseInt(Rooms.getCurrentRoom().getExits()[x]) != 0)
+            if (Integer.parseInt(rooms.getCurrentRoom().getExits()[x]) != 0)
             {
                 if (x == 0)
                 {
@@ -141,8 +151,10 @@ public class MenusAndMessages
     /**This is th main menu the player can call at almost anytime to access a variety of options
      * @return message The main menu
      */
-    public static String mainMenuMessage()
+    public String mainMenuMessage()
     {
+//        player = new AccountFunctions().getHero();
+
         String message = "-----------------------------------------";
         message += "\nEnter \"inventory\" to check inventory. \nEnter \"equip item name\" to equip a specific item in inventory." +
                 "\nEnter \"remove item name\" to throw away an item. \nEnter \"save\" to save your game. \nEnter \"quit\" to quit the game. \nEnter \"exit\" to return to game";
@@ -156,9 +168,17 @@ public class MenusAndMessages
     /**Provides the menu that appears before every enemy encounter
      * @return battleMessage The battle menu
      */
-    public static String battleMessage()
+    public String battleMessage()
     {
-        Monster monster = new Monster();
+//        player = new AccountFunctions().getHero();
+
+        monster = new Monster();
+        boolean freshEncounter = new GameInteractions().isFreshEncounter();
+        if (!freshEncounter)
+        {
+            monster = new Monster();
+            monster.setHealth(new GameInteractions().getMonsterHealth());
+        }
 
         String battleMessage = "*****************************************";
         //prints a pre-fight menu

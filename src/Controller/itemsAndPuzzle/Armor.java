@@ -1,5 +1,6 @@
 package controller.itemsAndPuzzle;
 
+import controller.AccountFunctions;
 import controller.room.Rooms;
 
 /**
@@ -17,16 +18,26 @@ public class Armor extends Item
     //instance variables
 	private int armorStrength;
 
+    //NEW
+    private static ItemDB itemDB = new ItemDB();
+    private static Rooms rooms = new AccountFunctions().getRooms();
+
     /**
 	 * Method: Constructor for Armor class
 	 * Constructor for Armor class
 	 */
 	public Armor()
 	{
-        String[] dbArmor = ItemDB.retrieveArmor(Rooms.getCurrentRoom().getIsArmor()).split("[|]");
+        String[] dbArmor = itemDB.retrieveArmor(rooms.getCurrentRoom().getIsArmor()).split("[|]");
         this.setItemName(dbArmor[0]);
 		this.armorStrength = Integer.parseInt(dbArmor[1]);
 	}
+
+    public Armor(String name, int armorStrength)
+    {
+        super(name);
+        this.armorStrength = armorStrength;
+    }
 
 	/**
 	 * Method: getHealthBoost

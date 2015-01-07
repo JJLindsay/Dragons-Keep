@@ -1,5 +1,6 @@
 package controller.itemsAndPuzzle;
 
+import controller.AccountDB;
 import model.Database;
 
 import java.sql.ResultSet;
@@ -17,13 +18,13 @@ import java.sql.SQLException;
  */
 public class PuzzleDB
 {
-    private static Database tdb = new Database();
+    private static Database tdb = new AccountDB().getDatabase();
 
     /**retrieves a particular puzzle
      * @param puzzleIndex the puzzle database ID
      * @return puzzleBuilder The puzzle and all its attributes
      */
-    public static String retrievePuzzle(int puzzleIndex)
+    public String retrievePuzzle(int puzzleIndex)
     {
         //creates a stringBuilder for the puzzle attributes
         StringBuilder puzzleBuilder = new StringBuilder();
@@ -38,13 +39,13 @@ public class PuzzleDB
                 if (rs.getInt("puzzleID") == puzzleIndex)
                 {
                     //formats the problem description with new lines
-                    String[] temp = rs.getString("problem").split("[+]");
-                    String str = temp[0];
-                    for (int u = 1; u < temp.length; u++)
+                    String[] problemHolder = rs.getString("problem").split("[+]");
+                    String problem = problemHolder[0];
+                    for (int u = 1; u < problemHolder.length; u++)
                     {
-                        str += "\n" + temp[u];
+                        problem += "\n" + problemHolder[u];
                     }
-                    puzzleBuilder.append(str);
+                    puzzleBuilder.append(problem);
 
                     puzzleBuilder.append("|");
                     puzzleBuilder.append(rs.getString("solution"));

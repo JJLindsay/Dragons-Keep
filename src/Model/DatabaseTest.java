@@ -24,24 +24,24 @@ public class DatabaseTest
     private static Database tdb = new Database();
     private static int playerID;
 
-    @Test
-    public void testCreateAccount() throws Exception
+    @Before
+    public void testCreateAccount()
     {
-        assertTrue(AccountDB.createAccount("createTestName") > 0);
+        assertTrue(new AccountDB().createAccount("createTestName") > 0);
     }
 
     @Test
-    public void testLoginAccount() throws Exception
+    public void testLoginAccount()
     {
-        assertTrue(AccountDB.loginAccount("createTestName"));
+        assertTrue(new AccountDB().loginAccount("createTestName"));
 
-        assertFalse(AccountDB.loginAccount(null));
-        assertFalse(AccountDB.loginAccount(""));
-        assertFalse(AccountDB.loginAccount(" "));
+        assertFalse(new AccountDB().loginAccount(null));
+        assertFalse(new AccountDB().loginAccount(""));
+        assertFalse(new AccountDB().loginAccount(" "));
     }
 
     @Test
-    public void testQuery() throws Exception
+    public void testQuery()
     {
         System.out.println("The Query results for createTestName: ");
         System.out.println("--------------------------- ");
@@ -70,11 +70,15 @@ public class DatabaseTest
     }
 
     @Test
-    public void testModData() throws Exception
+    public void testModData()
     {
         System.out.println("\nQuery results after modifying createTestName: ");
         System.out.println("------------------------------------------------");
 
+
+//        tdb.modData("DELETE FROM playerFile WHERE playerID = " + playerID);
+//        tdb.modData("INSERT INTO playerFile SET hasInventory = 6, score = 81, health = 22 " +
+//                "WHERE playerID = " + playerID);
         tdb.modData("UPDATE playerFile SET hasInventory = 6, score = 81, health = 22 " +
                 "WHERE playerID = " + playerID);
         try
@@ -91,7 +95,7 @@ public class DatabaseTest
                 System.out.println("player Health: " + rs.getString("health"));
                 System.out.println();
             }
-            rs.close();
+//            rs.close();
         }
         catch(SQLException sqe)
         {
@@ -99,9 +103,9 @@ public class DatabaseTest
         }
     }
 
-    @AfterClass
-    public static void tearDown() throws Exception
+    @After
+    public  void tearDown() throws Exception
     {
-        tdb.modData("DELETE FROM playerFile WHERE name = \'createTestName\'");
+        new Database().modData("DELETE FROM playerFile WHERE name = \'createTestName\'");
     }
 }

@@ -1,5 +1,6 @@
 package controller.inventory;
 
+import controller.AccountDB;
 import model.Database;
 import view.View;
 
@@ -18,14 +19,14 @@ import java.sql.SQLException;
  */
 public class InventoryDB
 {
-    private static Database tdb = new Database();
-    private static int shiKey = 1;
+    private  Database tdb = new AccountDB().getDatabase();
+    private int shiKey = 1;
 
     /**Retrieves a player's inventory
      * @param playerID The player's database ID
      * @return heroInventory The inventory and all its attributes
      */
-    public static String loadHeroInventory(int playerID)
+    public String loadHeroInventory(int playerID)
     {
         //creates a stringBuilder for the inventory
         StringBuilder heroInventory = new StringBuilder();
@@ -58,12 +59,12 @@ public class InventoryDB
      * @param playerInventory The player's inventory
      * @return true Indicates the success of saving the Hero's inventory
      */
-    public static Boolean saveHeroInventory(int playerID, String[][] playerInventory)
+    public Boolean saveHeroInventory(int playerID, String[][] playerInventory)
     {
         boolean looping;
 
         //if the playerID already exist, delete it
-        ResultSet rs;
+        ResultSet rs = null;
         try
         {
             //Query the database. Returns the results in a ResultSet

@@ -1,5 +1,6 @@
 package controller.itemsAndPuzzle;
 
+import controller.AccountDB;
 import model.Database;
 
 import java.sql.ResultSet;
@@ -18,14 +19,14 @@ import java.sql.SQLException;
 public class ItemDB
 {
     //instance variables
-    private static ResultSet rs = null;
-    private static Database tdb = new Database();
+    private ResultSet rs = null;
+    private Database tdb = new AccountDB().getDatabase();
 
     /**retrieves a particular armor
      * @param armorIndex the armor database ID
      * @return armorBuilder The armor and all its attributes
      */
-    public static String retrieveArmor(int armorIndex)
+    public String retrieveArmor(int armorIndex)
     {
         //creates a stringBuilder for the armor attributes
         StringBuilder armorBuilder = new StringBuilder();
@@ -57,7 +58,7 @@ public class ItemDB
      * @param elixirIndex the elixir database ID
      * @return elixirBuilder The elixir and all its attributes
      */
-    public static String retrieveElixir(int elixirIndex)
+    public String retrieveElixir(int elixirIndex)
     {
         //creates a stringBuilder for the elixir attributes
         StringBuilder elixirBuilder = new StringBuilder();
@@ -89,7 +90,7 @@ public class ItemDB
      * @param weaponIndex the weapon database ID
      * @return weaponBuilder The weapon and all its attributes
      */
-    public static String retrieveWeapon(int weaponIndex)
+    public String retrieveWeapon(int weaponIndex)
     {
         //creates a stringBuilder for the weapon attributes
         StringBuilder weaponBuilder = new StringBuilder();

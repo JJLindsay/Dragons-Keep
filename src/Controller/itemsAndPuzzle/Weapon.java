@@ -1,5 +1,6 @@
 package controller.itemsAndPuzzle;
 
+import controller.AccountFunctions;
 import controller.room.Rooms;
 
 /**
@@ -16,15 +17,25 @@ public class Weapon extends Item
 {
     //instance variable
 	private int strength;
+    private static ItemDB itemDB;
+    private static Rooms rooms;
 
     /**no argument constructor
      */
 	public Weapon()
 	{
-        String[] dbWeapon = ItemDB.retrieveWeapon(Rooms.getCurrentRoom().getIsWeapon()).split("[|]");
+        itemDB = new ItemDB();
+        rooms = new AccountFunctions().getRooms();
+        String[] dbWeapon = itemDB.retrieveWeapon(rooms.getCurrentRoom().getIsWeapon()).split("[|]");
         setItemName(dbWeapon[0]);
 		strength = Integer.parseInt(dbWeapon[1]);
 	}
+
+    public Weapon(String name, int strength)
+    {
+        super(name);
+        this.strength = strength;
+    }
 
 	/**
 	 * Method: getStrength

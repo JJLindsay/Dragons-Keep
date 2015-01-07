@@ -31,7 +31,7 @@ public class UpdateEntityTest
     @BeforeClass
     public static void setup()
     {
-        assertTrue(AccountDB.createAccount("JUnitTestName") > 0);
+        assertTrue(new AccountDB().createAccount("JUnitTestName") > 0);
 
         try
         {
@@ -54,7 +54,7 @@ public class UpdateEntityTest
     @Test
     public void testSaveHeroData() throws Exception
     {
-        assertTrue(ActorDB.saveHeroData(playerID + "|JUnitTestName|1|93|12"));
+        assertTrue(new ActorDB().saveHeroData(playerID + "|JUnitTestName|1|93|12"));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class UpdateEntityTest
         {
             rooms += "|" + (i%2);
         }
-        assertTrue(RoomsDB.saveRoomState(rooms));
+        assertTrue(new RoomsDB().saveRoomState(rooms));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class UpdateEntityTest
         tempInventory[2][0] = "Blue Elixir";
         tempInventory[2][1] = "e";
 
-        assertTrue(InventoryDB.saveHeroInventory(playerID, tempInventory));
+        assertTrue(new InventoryDB().saveHeroInventory(playerID, tempInventory));
     }
 
     @AfterClass

@@ -1,5 +1,7 @@
 package controller.room;
 
+import controller.AccountFunctions;
+
 /**
  * author: JJ Lindsay
  * version: 1.0
@@ -12,16 +14,19 @@ package controller.room;
  */
 public class EmptyARoom
 {
+    //NEW
+    private static Rooms rooms = new AccountFunctions().getRooms();
+
     /**This method sets a room as empty once it has been visited and there is nothing more to do in the room
      */
-    public static void setARoomEmpty()
+    public void setARoomEmpty()
     {
         //checks if every interaction with this particular room is set to 0
-        if (Rooms.getCurrentRoom().getIsMonster() == 0 && Rooms.getCurrentRoom().getIsPuzzle() == 0 &&
-                Rooms.getCurrentRoom().getIsArmor() == 0 && Rooms.getCurrentRoom().getIsWeapon() == 0 &&
-                Rooms.getCurrentRoom().getIsElixir() == 0)
+        if (rooms.getCurrentRoom().getIsMonster() == 0 && rooms.getCurrentRoom().getIsPuzzle() == 0 &&
+                rooms.getCurrentRoom().getIsArmor() == 0 && rooms.getCurrentRoom().getIsWeapon() == 0 &&
+                rooms.getCurrentRoom().getIsElixir() == 0)
         {
-            Rooms.getCurrentRoom().setIsEmpty(1);
+            rooms.getCurrentRoom().setIsEmpty(3);
 
             //Adds direction to the empty rooms
             String roomDirection = "<";
@@ -29,7 +34,7 @@ public class EmptyARoom
             for (int x = 0; x < 4; x++)
             {
                 //if an exit exist
-                if (Integer.parseInt(Rooms.getCurrentRoom().getExits()[x]) != 0)
+                if (Integer.parseInt(rooms.getCurrentRoom().getExits()[x]) != 0)
                 {
                     if (x == 0)
                     {
@@ -47,7 +52,7 @@ public class EmptyARoom
                 }
             }
             roomDirection += ">";
-            Rooms.getCurrentRoom().setRoomDescription(roomDirection + " This room is empty... and it looks a bit familiar.");
+            rooms.getCurrentRoom().setRoomDescription(roomDirection + " This room is empty... and it looks a bit familiar.");
         }
     }
 }

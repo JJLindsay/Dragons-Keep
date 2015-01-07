@@ -1,5 +1,6 @@
 package controller;
 
+import controller.room.EmptyARoom;
 import controller.room.Rooms;
 import controller.actors.Hero;
 import controller.itemsAndPuzzle.Armor;
@@ -18,39 +19,47 @@ import controller.itemsAndPuzzle.Weapon;
  */
 public class ItemCollection
 {
-    //static instance variables
-    private static Hero player = AccountFunctions.getHero();
+    //NEW
+    private static Rooms currentRoom;
+    private static MenusAndMessages menusAndMessages;
 
     /**This method manages the collection of any given item found in a room
      */
-    public static String collectItem()
+    public String collectItem()
     {
+        Hero player = new AccountFunctions().getHero();
+        currentRoom = new AccountFunctions().getCurrentRoom();
+        menusAndMessages = new MenusAndMessages();
+
         //collect the armor in the room
-        if (Rooms.getCurrentRoom().getIsArmor() > 0)
+        if (currentRoom.getIsArmor() > 0)
         {
             Armor armor = new Armor();
             player.getInventory().add(armor);
-            Rooms.getCurrentRoom().setIsArmor(0);
+            currentRoom.setIsArmor(0);
+            new EmptyARoom().setARoomEmpty();
 
-            return "You have found " + armor.getItemName() + " and added it to your inventory." + "\n\n" + MenusAndMessages.changeRoomsMessage();
+            return "You have found " + armor.getItemName() + " and added it to your inventory." + "\n\n" + menusAndMessages.changeRoomsMessage();
         }
         //collect the elixir in the room
-        else if (Rooms.getCurrentRoom().getIsElixir() > 0)
+        else if (currentRoom.getIsElixir() > 0)
         {
             Elixir elixir = new Elixir();
             player.getInventory().add(elixir);
-            Rooms.getCurrentRoom().setIsElixir(0);
+            currentRoom.setIsElixir(0);
+            new EmptyARoom().setARoomEmpty();
 
-            return "You have found " + elixir.getItemName() + " and added it to your inventory." + "\n\n" + MenusAndMessages.changeRoomsMessage();
+            return "You have found " + elixir.getItemName() + " and added it to your inventory." + "\n\n" + menusAndMessages.changeRoomsMessage();
         }
         //collect the weapon in the room
         else
         {
             Weapon weapon = new Weapon();
             player.getInventory().add(weapon);
-            Rooms.getCurrentRoom().setIsWeapon(0);
+            currentRoom.setIsWeapon(0);
+            new EmptyARoom().setARoomEmpty();
 
-            return "You have found " + weapon.getItemName() + " and added it to your inventory." + "\n\n" + MenusAndMessages.changeRoomsMessage();
+            return "You have found " + weapon.getItemName() + " and added it to your inventory." + "\n\n" + menusAndMessages.changeRoomsMessage();
         }
     }
 }

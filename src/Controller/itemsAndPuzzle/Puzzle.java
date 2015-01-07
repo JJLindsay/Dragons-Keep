@@ -1,7 +1,10 @@
 package controller.itemsAndPuzzle;
 
+import controller.AccountFunctions;
 import controller.MenusAndMessages;
+import controller.room.EmptyARoom;
 import controller.room.Rooms;
+import view.View;
 
 /**
  * @author Everton Gardiner Jr. and JJ Lindsay
@@ -22,12 +25,17 @@ public class Puzzle
 	private String failureMessage;
     private boolean failed = false;
 
+    //NEW
+    private static PuzzleDB puzzleDB = new PuzzleDB();  //original
+    private static Rooms currentRoom = new AccountFunctions().getCurrentRoom();
+    private static MenusAndMessages menusAndMessages = new View().getMenusAndMessages();
+
     /**No argument constructor
      */
 	public Puzzle()
 	{
         //create and puzzle from the db
-        String[] dbPuzzle = PuzzleDB.retrievePuzzle(Rooms.getCurrentRoom().getIsPuzzle()).split("[|]");
+        String[] dbPuzzle = puzzleDB.retrievePuzzle(currentRoom.getIsPuzzle()).split("[|]");
 
         this.puzzle = dbPuzzle[0];
         this.solution = dbPuzzle[1];
@@ -86,18 +94,17 @@ public class Puzzle
             //compares the user solution to the correct answer
             if (getSolution().equalsIgnoreCase(userInput))  //cleared
             {
-                Rooms.getCurrentRoom().setIsPuzzle(0);
+                currentRoom.setIsPuzzle(0);
 
-                if (Rooms.getCurrentRoom().getIsMonster() > 0||
-                        Rooms.getCurrentRoom().getIsArmor() > 0 ||
-                        Rooms.getCurrentRoom().getIsWeapon() > 0 ||
-                        Rooms.getCurrentRoom().getIsElixir() > 0)//did an item or monster appear?
+                if (currentRoom.getIsMonster() > 0 || currentRoom.getIsArmor() > 0 || currentRoom.getIsWeapon() > 0 ||
+                        currentRoom.getIsElixir() > 0)//did an item or monster appear?
                 {
-                    return getSuccessMessage() + MenusAndMessages.roomSummaryMessage(); //"\n\nThere is an item to collect. Are you going to collect it? (yes/no)";
+                    return getSuccessMessage() + menusAndMessages.roomSummaryMessage(); //"\n\nThere is an item to collect. Are you going to collect it? (yes/no)";
                 }
                 else //is the room completely empty?
                 {
-                    return getSuccessMessage() + "\n\n" + MenusAndMessages.changeRoomsMessage();
+                    new EmptyARoom().setARoomEmpty();
+                    return getSuccessMessage() + "\n\n" + menusAndMessages.changeRoomsMessage();
                 }
             } else
             {
@@ -114,7 +121,7 @@ public class Puzzle
             } else if (userInput.equalsIgnoreCase("no"))  //don't try again  \\CLEARED
             {
                 failed = false;
-                return MenusAndMessages.changeRoomsMessage();
+                return menusAndMessages.changeRoomsMessage();
             } else  //cleared
             {
                 return "Your request was unclear. Check your spelling. \nTry the puzzle again? (yes/no)";

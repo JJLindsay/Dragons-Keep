@@ -21,7 +21,7 @@ public class Inventory
     private final int SIZELIMIT = 10;
     private String[][] ruckSack;
     char[] itemType; //A, E, W for armor, elixir, or weapon
-    private static int itemCount;
+    private int itemCount;
     private Weapon[] weapons;
     private Elixir[] elixirs;
     private Armor[] armors;
@@ -319,7 +319,7 @@ public class Inventory
                 return ruckSack[s][1];
             }
         }
-        View.setControllerDisplay("An item type for " + weaponArmElixName + " could not be found in your inventory.");
+        View.setControllerDisplay("No item type for " + weaponArmElixName + " could not be found in your inventory.");
         return null;
     }
 

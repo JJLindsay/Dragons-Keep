@@ -26,9 +26,11 @@ public class Rooms
 	private int isEmpty; // 0 or 1 acts as sqlite boolean
 	private String[] exits; //room options for exiting North south east west
 
-    //static instance variables
+    //instance variables
     private static int currentRoomID;
     private static Map<Integer, Rooms> roomsMap;
+    private static RoomsDB roomsDB; //original
+
 
     /**No argument constructor
      */
@@ -50,9 +52,10 @@ public class Rooms
      */
     public Rooms(int playerID, boolean accountExist)
     {
+        roomsDB = new RoomsDB();
         //Loads all the rooms into an array
-        String[] allRooms = RoomsDB.retrieveAllRooms().split("[|]");
-        String[] temp = new String[4];
+        String[] allRooms = roomsDB.retrieveAllRooms().split("[|]");
+        String[] roomExits = new String[4];
         //creates a rooms Map using the roomID as the key and the room as the object
         roomsMap = new TreeMap<Integer, Rooms>();
 
@@ -60,11 +63,11 @@ public class Rooms
         for (int i = 0; i < allRooms.length - 11; i = i + 12)
         {
             Rooms rooms = new Rooms();
-            temp[0] = allRooms[i + 1];
-            temp[1] = allRooms[i + 2];
-            temp[2] = allRooms[i + 3];
-            temp[3] = allRooms[i + 4];
-            rooms.setExits(temp);
+            roomExits[0] = allRooms[i + 1];
+            roomExits[1] = allRooms[i + 2];
+            roomExits[2] = allRooms[i + 3];
+            roomExits[3] = allRooms[i + 4];
+            rooms.setExits(roomExits);
 
             rooms.setRoomDescription(allRooms[i + 5]);  //THIS will CHANGE FOR LOGIN
             rooms.setIsEmpty(Integer.parseInt(allRooms[i + 6]));  //THIS will CHANGE FOR LOGIN
@@ -82,7 +85,7 @@ public class Rooms
         //user successfully logged into saved account
         if (accountExist)
         {
-            String[] savedRooms = RoomsDB.loadSavedRooms(playerID).split("[|]");
+            String[] savedRooms = roomsDB.loadSavedRooms(playerID).split("[|]");
 
             if (Integer.parseInt(savedRooms[0]) == playerID)
             {
@@ -90,17 +93,18 @@ public class Rooms
                 currentRoomID = Integer.parseInt(savedRooms[1]);
 
                 //is the room empty (1 for true, 0 for false)
-                for (int y = 2; y <= Rooms.getCurrentRoomID() + 1; y++)
+                for (int y = 2; y <= 51; y++)
                 {
                     //if the room is empty
-                    if (Integer.parseInt(savedRooms[y]) == 1)
+                    if (Integer.parseInt(savedRooms[y]) == 3)
                     {
                         roomsMap.get(y - 1).setRoomDescription("This room is empty... and it looks a bit familiar");
-                        roomsMap.get(y - 1).setIsEmpty(1);
+                        roomsMap.get(y - 1).setIsEmpty(3);
                         roomsMap.get(y - 1).setIsArmor(0);
                         roomsMap.get(y - 1).setIsElixir(0);
                         roomsMap.get(y - 1).setIsWeapon(0);
                         roomsMap.get(y - 1).setIsPuzzle(0);
+                        roomsMap.get(y - 1).setIsMonster(0);
                     }
                 }
             }
@@ -236,9 +240,9 @@ public class Rooms
     }
 
     /**
-     * @return currentRoom Gets the currentRoom
+     * @return currentRoom Gets the current room
      */
-    public static Rooms getCurrentRoom()
+    public Rooms getCurrentRoom()
     {
         return roomsMap.get(currentRoomID);
     }
@@ -246,7 +250,7 @@ public class Rooms
     /**Sets the current room
      * @param currentRoomID the new current room
      */
-    public static void setCurrentRoomID(int currentRoomID)
+    public void setCurrentRoomID(int currentRoomID)
     {
         Rooms.currentRoomID = currentRoomID;
     }
@@ -254,7 +258,7 @@ public class Rooms
     /**
      * @return currentRoom Gets the currentRoom
      */
-    public static int getCurrentRoomID()
+    public int getCurrentRoomID()
     {
         return currentRoomID;
     }
@@ -262,7 +266,7 @@ public class Rooms
     /**
      * @return roomsMap Gets the roomsMap
      */
-    public static Map<Integer, Rooms> getRoomsMap()
+    public Map<Integer, Rooms> getRoomsMap()
     {
         return roomsMap;
     }

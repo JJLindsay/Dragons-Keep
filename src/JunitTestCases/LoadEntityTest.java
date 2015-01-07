@@ -20,15 +20,15 @@ public class LoadEntityTest
     @BeforeClass
     public static void  setUp() throws Exception
     {
-        playerID = AccountDB.createAccount("JUnitTestName");
-        ActorDB.saveHeroData(playerID + "|JUnitTestName|1|77|61");
+        playerID = new AccountDB().createAccount("JUnitTestName");
+        new ActorDB().saveHeroData(playerID + "|JUnitTestName|1|77|61");
 
         String rooms = playerID + "|" + 14;
         for (int i = 1; i <= 50;  i++)
         {
             rooms += "|" + (i%2);
         }
-        RoomsDB.saveRoomState(rooms);
+        new RoomsDB().saveRoomState(rooms);
 
         String[][] tempInventory = new String[3][2];
         tempInventory[0][0] = "dagger";
@@ -38,7 +38,7 @@ public class LoadEntityTest
         tempInventory[2][0] = "Red Elixir";
         tempInventory[2][1] = "e";
 
-        InventoryDB.saveHeroInventory(playerID, tempInventory);
+        new InventoryDB().saveHeroInventory(playerID, tempInventory);
     }
 
     @AfterClass
@@ -57,7 +57,7 @@ public class LoadEntityTest
         {
             rooms += "|" + (i%2);
         }
-        assertEquals(rooms, RoomsDB.loadSavedRooms(playerID));
+        assertEquals(rooms, new RoomsDB().loadSavedRooms(playerID));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class LoadEntityTest
     {
         String expected = playerID + "|JUnitTestName|1|77|61|";
 
-        assertEquals(expected, ActorDB.loadHero("JUnitTestName"));
+        assertEquals(expected, new ActorDB().loadHero("JUnitTestName"));
     }
 
     @Test
@@ -73,13 +73,13 @@ public class LoadEntityTest
     {
         String expected = "1|0|0|0|1|0|0|0|3|";
 
-        assertEquals(expected, InventoryDB.loadHeroInventory(playerID));
+        assertEquals(expected, new InventoryDB().loadHeroInventory(playerID));
     }
 
     @Test
     public void testRetrieveAllRooms() throws Exception
     {
-        String[] actual = RoomsDB.retrieveAllRooms().split("[|]]");
+        String[] actual = new RoomsDB().retrieveAllRooms().split("[|]]");
 
         for(int i = 0; i < actual.length-11; i = i+12)
         {
@@ -105,7 +105,7 @@ public class LoadEntityTest
     {
         String expected = "Blue Dragon|31|51";
 
-        assertEquals(expected, ActorDB.retrieveMonster(5));
+        assertEquals(expected, new ActorDB().retrieveMonster(5));
     }
 
     @Test
@@ -113,7 +113,7 @@ public class LoadEntityTest
     {
         String expected = "Dragon Scales|48";
 
-        assertEquals(expected, ItemDB.retrieveArmor(3));
+        assertEquals(expected, new ItemDB().retrieveArmor(3));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class LoadEntityTest
     {
         String expected = "Blue Elixir|10";
 
-        assertEquals(expected, ItemDB.retrieveElixir(1));
+        assertEquals(expected, new ItemDB().retrieveElixir(1));
     }
 
     @Test
@@ -129,7 +129,7 @@ public class LoadEntityTest
     {
         String expected = "Axe|8";
 
-        assertEquals(expected, ItemDB.retrieveWeapon(6));
+        assertEquals(expected, new ItemDB().retrieveWeapon(6));
     }
 
     @Test
@@ -142,6 +142,6 @@ public class LoadEntityTest
         expected.append("|nothing happened");
         expected.append("|0");
 
-        assertEquals(expected.toString(), PuzzleDB.retrievePuzzle(2));
+        assertEquals(expected.toString(), new PuzzleDB().retrievePuzzle(2));
     }
 }

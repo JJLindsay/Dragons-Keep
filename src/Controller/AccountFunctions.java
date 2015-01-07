@@ -2,9 +2,11 @@ package controller;
 
 import controller.actors.Hero;
 import controller.inventory.InventoryDB;
+import controller.itemsAndPuzzle.ItemDB;
 import controller.room.Rooms;
 import controller.actors.ActorDB;
 import controller.room.RoomsDB;
+import view.View;
 
 import java.util.Map;
 
@@ -21,66 +23,89 @@ import java.util.Map;
  */
 public class AccountFunctions
 {
-    private static Hero player;
-    private static int loginOrCreateChoice;
+    private static Hero player; //original
+    private static int loginOrCreateChoice;  // = getFromGameInteractions login decision
     private static boolean accountExist;
-    private static Map<Integer, Rooms> roomsMap;
 
+    //NEW
+    private  static AccountDB accountDB;  //original
+    private static Rooms rooms;  //original
+    private  ActorDB actorDB;
+    private  InventoryDB inventoryDB;
+    private  RoomsDB roomsDB;
+    private MenusAndMessages menusAndMessages = new View().getMenusAndMessages();
 
 
     /**This manages the login & create-account
      * @return a room description if successful or the game Title screen if the login/create-account is unsuccessful
      */
-    public static String loginCreate(String loginName)
+    public String loginCreate(String loginName)
     {
-        if (1 == loginOrCreateChoice)
+//        menusAndMessages = new MenusAndMessages();
+
+        if (loginOrCreateChoice == 1)
         {
+            accountDB = new AccountDB();  //do this once or don't do at all if 2 was done
+
             //verify user account exist
-            if (AccountDB.loginAccount(loginName))
+            if (accountDB.loginAccount(loginName))
             {
                 //account existed prior
                 accountExist = true;
                 player = new Hero(loginName);
 
-                new Rooms(player.getPlayerID(), true);  //CHANGED
-                roomsMap = Rooms.getRoomsMap();
+                rooms = new Rooms(player.getPlayerID(), true);  //CHANGED
+//                roomsMap = rooms.getRoomsMap();  //NOT SURE WHY I NEED THIS
 
-                return "Account located. Loading game..." + "\n\n" + MenusAndMessages.enteredRoomMessage();
+                return "Account located. Loading game..." + "\n" + menusAndMessages.enteredRoomMessage();
             } else
             {
-                return "ERROR! Could not locate your user name" + "\n\n" + MenusAndMessages.titleScreen();
+                return "Error Could not locate your user name" + "\n" + menusAndMessages.titleScreen();
             }
         }
-        else if (2 == loginOrCreateChoice)
+        else if (loginOrCreateChoice == 2)
         {
-            if (!AccountDB.loginAccount(loginName))
+            accountDB = new AccountDB(); //do this once or don't do at all if 1 was done
+
+            if (!accountDB.loginAccount(loginName))
             {
                 //account did not exist prior
                 accountExist = false;
                 //defaults to playerID 0 until save is called
                 player = new Hero(loginName, 0);
 
-                new Rooms(0, false);  //CHANGED
-                roomsMap = Rooms.getRoomsMap();
+                rooms = new Rooms(0, false);  //CHANGED
+//                roomsMap = rooms.getRoomsMap();  //NOT SURE WHY I NEED THIS
 
-                return "Your account was created!" + "\n\n" + MenusAndMessages.enteredRoomMessage();
+                return "Your account was created!" + "\n" + menusAndMessages.enteredRoomMessage();
             }
-            return "ERROR! An account with that name already exist." + "\n\n" + MenusAndMessages.titleScreen();
+            return "Error creating your account. An account with that name already exist." + "\n" + menusAndMessages.titleScreen();
         }
         else
-            return "ERROR! Could not understand your response. Try again." + "\n\n" + MenusAndMessages.titleScreen();
+            return "Error understanding your response. Try again." + "\n" + menusAndMessages.titleScreen();
     }
 
     /**The method manages the player's request to save the game
      */
-    public static void saveGame()
+    public void saveGame()
     {
+        System.out.println("save#1 " + player.getName()); //DEBUG CODE
+        System.out.println("save#6 true: " + accountExist); //DEBUG CODE
+        System.out.println("save#7 !null: " + player.getInventory()); //DEBUG CODE
+
+
+
         //Creates an Account in the database and sets the ID if the user did not login at the game's start
         if (!accountExist)
         {
-            player.setPlayerID(AccountDB.createAccount(player.getName()));
+            accountDB = new AccountDB();
+
+            System.out.println("save#2 " + player.getName()); //DEBUG CODE = new Hero(loginName, 0);
+            player.setPlayerID(accountDB.createAccount(player.getName()));
             accountExist = true;
         }
+
+        System.out.println("save#9 "); //DEBUG CODE = new Hero(loginName, 0);
 
         //Prepares the players stats: ID, name, hasInventory, score, and health to be save in the db
         String heroData = player.getPlayerID() + "|" + player.getName() + "|";
@@ -93,34 +118,46 @@ public class AccountFunctions
             heroData += "0" + "|";
         }
         heroData += player.getScore() + "|" + player.getHealth();
+        System.out.println("save#2.5 Prior to 3"); //DEBUG CODE
 
+        actorDB = new ActorDB();
         //saves the player ID, name, hasInventory, score, and health to the database
-        ActorDB.saveHeroData(heroData);
+        actorDB.saveHeroData(heroData);
+        System.out.println("save#3 hero data "); //DEBUG CODE
 
+        inventoryDB = new InventoryDB();
         //saves the player's inventory
-        InventoryDB.saveHeroInventory(player.getPlayerID(), player.getInventory().getRuckSack());
+        inventoryDB.saveHeroInventory(player.getPlayerID(), player.getInventory().getRuckSack());
+        System.out.println("save#4 hero inventory"); //DEBUG CODE
 
         //saves the state of all the rooms for this player
-        String savedRooms = player.getPlayerID() + "|" + Rooms.getCurrentRoomID();
+        String savedRooms = player.getPlayerID() + "|" + rooms.getCurrentRoomID();
         for (int i = 1; i <= 50;  i++)
         {
-            if (roomsMap.get(i).getIsEmpty() == 0)
+            if (rooms.getRoomsMap().get(i).getIsEmpty() == 0)
             {
-                savedRooms += "|" + 0;
+                savedRooms += "|" + 0;  //false
+            }
+            else if (rooms.getRoomsMap().get(i).getIsEmpty() == 3)
+            {
+                savedRooms += "|" + 3;  //true and its been visited
             }
             else
             {
-                savedRooms += "|" + 1;
+                savedRooms += "|" + 1;  //true and never visited
             }
         }
-        RoomsDB.saveRoomState(savedRooms);
+        roomsDB = new RoomsDB();
+        roomsDB.saveRoomState(savedRooms);
+        System.out.println("save#5 saved rooms "); //DEBUG CODE
+
     }
 
     /**
      * This sets the choice the player makes to login or create a game.
      * @param loginOrCreateChoice A 1 or 2 which corresponds to login or create account.
      */
-    public static void setLoginOrCreateChoice(int loginOrCreateChoice)
+    public void setLoginOrCreateChoice(int loginOrCreateChoice)
     {
         AccountFunctions.loginOrCreateChoice = loginOrCreateChoice;
     }
@@ -128,8 +165,31 @@ public class AccountFunctions
     /**
      * @return player A Hero object that provides central access to all player properties while in other classes
      */
-    public static Hero getHero()
+    public Hero getHero()
     {
         return player;
+    }
+
+    /**
+     * Gets the actual current room itself
+     * @return
+     */
+    public Rooms getCurrentRoom()
+    {
+        return rooms.getCurrentRoom();
+    }
+
+    public Map<Integer, Rooms> getRoomsMap()
+    {
+        return rooms.getRoomsMap();
+    }
+
+    /**
+     * Gets the room with the map in it
+     * @return
+     */
+    public Rooms getRooms()
+    {
+        return rooms;
     }
 }

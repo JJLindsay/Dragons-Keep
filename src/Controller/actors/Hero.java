@@ -2,6 +2,7 @@ package controller.actors;
 
 import controller.inventory.Inventory;
 import controller.inventory.InventoryDB;
+import controller.itemsAndPuzzle.ItemDB;
 import controller.itemsAndPuzzle.Weapon;
 import controller.itemsAndPuzzle.Armor;
 import controller.itemsAndPuzzle.Elixir;
@@ -24,6 +25,11 @@ public class Hero extends Actor
 	private  int score;
 	private  int defenseStrength;
 
+    //NEW
+    private static ActorDB actorDB = new ActorDB();  //original
+    private static InventoryDB inventoryDB = new InventoryDB();  //original
+    private static ItemDB itemDB = new ItemDB();  //original
+
     /**Two argument constructor
      * @param name The Hero's name
      * @param playerID The Hero's database primary key
@@ -45,7 +51,7 @@ public class Hero extends Actor
         super(heroName);
 
         //get saved player data
-        String[] loginDetails = ActorDB.loadHero(heroName).split("[|]");
+        String[] loginDetails = actorDB.loadHero(heroName).split("[|]");
 
         //create player with ID, name, score, and health from saved information
         this.score = Integer.parseInt(loginDetails[3]);
@@ -75,31 +81,37 @@ public class Hero extends Actor
     public  void createInventory(int playerID)
     {
         int p = 0;
-        String[] heroInventory = InventoryDB.loadHeroInventory(playerID).split("[|]");
+        String[] heroInventory = inventoryDB.loadHeroInventory(playerID).split("[|]");
+        inventory = new Inventory();
 
         while (p < heroInventory.length - 2)
         {
             //checks if a weaponID exists
             if (!heroInventory[p].equalsIgnoreCase("0"))
             {
+                //get the weapon from the database
+                String[] dbWeapon = itemDB.retrieveWeapon(Integer.parseInt(heroInventory[p])).split("[|]");
                 //builds an weapon(name, strength)
-                Weapon weapon = new Weapon();
-                //adds it to inventory
+                Weapon weapon = new Weapon(dbWeapon[0], Integer.parseInt(dbWeapon[1]));                //adds it to inventory
                 this.getInventory().add(weapon);
             }
             //checks if a armorID exists
             else if (!heroInventory[p + 1].equalsIgnoreCase("0"))
             {
+                //get the armor from the database
+                String[] dbArmor = itemDB.retrieveArmor(Integer.parseInt(heroInventory[p + 1])).split("[|]");
                 //builds an armor(name, defenseBoost)
-                Armor armor = new Armor();
+                Armor armor = new Armor(dbArmor[0], Integer.parseInt(dbArmor[1]));
                 //adds it to inventory
                 this.getInventory().add(armor);
             }
             //checks if a elixirID exists
             else if (!heroInventory[p + 2].equalsIgnoreCase("0"))
             {
+                //get the elixir from the database
+                String[] dbElixir = itemDB.retrieveElixir(Integer.parseInt(heroInventory[p+2])).split("[|]");
                 //builds an elixir(name, healthBoost)
-                Elixir elixir = new Elixir();
+                Elixir elixir = new Elixir(dbElixir[0], Integer.parseInt(dbElixir[1]));
                 //adds it to inventory
                 this.getInventory().add(elixir);
             }
@@ -156,5 +168,10 @@ public class Hero extends Actor
     public  void setPlayerID(int playerID)
     {
         this.playerID = playerID;
+    }
+
+    public static ActorDB getActorDB()
+    {
+        return actorDB;
     }
 }

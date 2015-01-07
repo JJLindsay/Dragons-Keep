@@ -20,6 +20,11 @@ abstract class Item
         itemName = "";
     }
 
+    public Item(String name)
+    {
+        this.itemName = name;
+    }
+
 	/**
 	 * Method: getItemName
 	 * @return The current Item name of the object
