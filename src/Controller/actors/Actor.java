@@ -38,7 +38,7 @@ abstract class Actor
      * @param health The Actor's health
      * @param attackPower The Actor's attack power
      */
-    protected Actor(String name, int health, int attackPower)
+    public Actor(String name, int health, int attackPower)
     {
         this.name = name;
         this.health = health;

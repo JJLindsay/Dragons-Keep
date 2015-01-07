@@ -23,9 +23,9 @@ public class Puzzle
     private String solution;
     private String successMessage;
 	private String failureMessage;
-    private boolean failed = false;
 
-    //NEW
+    //static instance variables
+    private static boolean failed = false;
     private static PuzzleDB puzzleDB = new PuzzleDB();  //original
     private static Rooms currentRoom = new AccountFunctions().getCurrentRoom();
     private static MenusAndMessages menusAndMessages = new View().getMenusAndMessages();

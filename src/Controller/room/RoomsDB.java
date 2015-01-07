@@ -152,12 +152,12 @@ public class RoomsDB
             }
             playerRoomsInsert += " WHERE playerID = " + rooms[0];
             tdb.modData(playerRoomsInsert);
-            View.setControllerDisplay("Successfully saved the rooms to the database.");
+            new View().setControllerDisplay("Successfully saved the rooms to the database.");
 
         }
         else
         {
-            View.setControllerDisplay("Successfully saved the rooms to the database.");
+            new View().setControllerDisplay("Successfully saved the rooms to the database.");
         }
         return true;
     }

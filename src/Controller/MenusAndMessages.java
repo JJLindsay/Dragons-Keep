@@ -16,14 +16,12 @@ import controller.room.Rooms;
  */
 public class MenusAndMessages
 {
-    //NEW
-//    private AccountFunctions accountFunctions;
+    //static instance variables
     private static Rooms rooms;
-
-    //instance variables
     //These are so Hero and startup are remembered on every visit to this class
     private static Hero player;
-    private boolean startingUp = true;
+
+    //instance variables
     private Monster monster;
 
     /**The title screen message and login or create request
@@ -48,8 +46,6 @@ public class MenusAndMessages
      */
     public String roomSummaryMessage()
     {
-//        player = new AccountFunctions().getHero();
-
         if (2 == rooms.getCurrentRoomID() && player.getInventory() == null)
         {
             return "\nAre you going to collect the rucksack? (yes/no)";
@@ -77,14 +73,6 @@ public class MenusAndMessages
     {
         player = new AccountFunctions().getHero();
         rooms = new AccountFunctions().getRooms();
-
-        //retrieves the user's HERO from AccountFunctions
-        //this occurs only once after a successful login/create
-//        if (startingUp)
-//        {
-//            player = accountFunctions.getHero();
-//            startingUp = false;
-//        }
 
         if (rooms.getCurrentRoomID() == 2 && player.getInventory() == null)
         {
@@ -153,8 +141,6 @@ public class MenusAndMessages
      */
     public String mainMenuMessage()
     {
-//        player = new AccountFunctions().getHero();
-
         String message = "-----------------------------------------";
         message += "\nEnter \"inventory\" to check inventory. \nEnter \"equip item name\" to equip a specific item in inventory." +
                 "\nEnter \"remove item name\" to throw away an item. \nEnter \"save\" to save your game. \nEnter \"quit\" to quit the game. \nEnter \"exit\" to return to game";
@@ -170,8 +156,6 @@ public class MenusAndMessages
      */
     public String battleMessage()
     {
-//        player = new AccountFunctions().getHero();
-
         monster = new Monster();
         boolean freshEncounter = new GameInteractions().isFreshEncounter();
         if (!freshEncounter)

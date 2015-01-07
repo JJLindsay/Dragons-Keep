@@ -2,13 +2,10 @@ package controller;
 
 import controller.actors.Hero;
 import controller.inventory.InventoryDB;
-import controller.itemsAndPuzzle.ItemDB;
 import controller.room.Rooms;
 import controller.actors.ActorDB;
 import controller.room.RoomsDB;
 import view.View;
-
-import java.util.Map;
 
 /**
  * author: JJ Lindsay
@@ -23,26 +20,24 @@ import java.util.Map;
  */
 public class AccountFunctions
 {
+    //static instance variables
     private static Hero player; //original
-    private static int loginOrCreateChoice;  // = getFromGameInteractions login decision
+    private static int loginOrCreateChoice;
     private static boolean accountExist;
-
-    //NEW
     private  static AccountDB accountDB;  //original
     private static Rooms rooms;  //original
+
+    //instance variables
     private  ActorDB actorDB;
     private  InventoryDB inventoryDB;
     private  RoomsDB roomsDB;
     private MenusAndMessages menusAndMessages = new View().getMenusAndMessages();
-
 
     /**This manages the login & create-account
      * @return a room description if successful or the game Title screen if the login/create-account is unsuccessful
      */
     public String loginCreate(String loginName)
     {
-//        menusAndMessages = new MenusAndMessages();
-
         if (loginOrCreateChoice == 1)
         {
             accountDB = new AccountDB();  //do this once or don't do at all if 2 was done
@@ -55,7 +50,6 @@ public class AccountFunctions
                 player = new Hero(loginName);
 
                 rooms = new Rooms(player.getPlayerID(), true);  //CHANGED
-//                roomsMap = rooms.getRoomsMap();  //NOT SURE WHY I NEED THIS
 
                 return "Account located. Loading game..." + "\n" + menusAndMessages.enteredRoomMessage();
             } else
@@ -75,7 +69,6 @@ public class AccountFunctions
                 player = new Hero(loginName, 0);
 
                 rooms = new Rooms(0, false);  //CHANGED
-//                roomsMap = rooms.getRoomsMap();  //NOT SURE WHY I NEED THIS
 
                 return "Your account was created!" + "\n" + menusAndMessages.enteredRoomMessage();
             }
@@ -89,23 +82,14 @@ public class AccountFunctions
      */
     public void saveGame()
     {
-        System.out.println("save#1 " + player.getName()); //DEBUG CODE
-        System.out.println("save#6 true: " + accountExist); //DEBUG CODE
-        System.out.println("save#7 !null: " + player.getInventory()); //DEBUG CODE
-
-
-
         //Creates an Account in the database and sets the ID if the user did not login at the game's start
         if (!accountExist)
         {
             accountDB = new AccountDB();
 
-            System.out.println("save#2 " + player.getName()); //DEBUG CODE = new Hero(loginName, 0);
             player.setPlayerID(accountDB.createAccount(player.getName()));
             accountExist = true;
         }
-
-        System.out.println("save#9 "); //DEBUG CODE = new Hero(loginName, 0);
 
         //Prepares the players stats: ID, name, hasInventory, score, and health to be save in the db
         String heroData = player.getPlayerID() + "|" + player.getName() + "|";
@@ -118,17 +102,14 @@ public class AccountFunctions
             heroData += "0" + "|";
         }
         heroData += player.getScore() + "|" + player.getHealth();
-        System.out.println("save#2.5 Prior to 3"); //DEBUG CODE
 
         actorDB = new ActorDB();
         //saves the player ID, name, hasInventory, score, and health to the database
         actorDB.saveHeroData(heroData);
-        System.out.println("save#3 hero data "); //DEBUG CODE
 
         inventoryDB = new InventoryDB();
         //saves the player's inventory
         inventoryDB.saveHeroInventory(player.getPlayerID(), player.getInventory().getRuckSack());
-        System.out.println("save#4 hero inventory"); //DEBUG CODE
 
         //saves the state of all the rooms for this player
         String savedRooms = player.getPlayerID() + "|" + rooms.getCurrentRoomID();
@@ -149,8 +130,6 @@ public class AccountFunctions
         }
         roomsDB = new RoomsDB();
         roomsDB.saveRoomState(savedRooms);
-        System.out.println("save#5 saved rooms "); //DEBUG CODE
-
     }
 
     /**
@@ -171,22 +150,15 @@ public class AccountFunctions
     }
 
     /**
-     * Gets the actual current room itself
-     * @return
+     * @return Gets the actual current room itself
      */
     public Rooms getCurrentRoom()
     {
         return rooms.getCurrentRoom();
     }
 
-    public Map<Integer, Rooms> getRoomsMap()
-    {
-        return rooms.getRoomsMap();
-    }
-
     /**
-     * Gets the room with the map in it
-     * @return
+     * @return Gets the room which contains the roomsMap
      */
     public Rooms getRooms()
     {

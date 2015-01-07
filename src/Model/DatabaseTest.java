@@ -75,10 +75,6 @@ public class DatabaseTest
         System.out.println("\nQuery results after modifying createTestName: ");
         System.out.println("------------------------------------------------");
 
-
-//        tdb.modData("DELETE FROM playerFile WHERE playerID = " + playerID);
-//        tdb.modData("INSERT INTO playerFile SET hasInventory = 6, score = 81, health = 22 " +
-//                "WHERE playerID = " + playerID);
         tdb.modData("UPDATE playerFile SET hasInventory = 6, score = 81, health = 22 " +
                 "WHERE playerID = " + playerID);
         try
@@ -95,7 +91,7 @@ public class DatabaseTest
                 System.out.println("player Health: " + rs.getString("health"));
                 System.out.println();
             }
-//            rs.close();
+            rs.close();
         }
         catch(SQLException sqe)
         {

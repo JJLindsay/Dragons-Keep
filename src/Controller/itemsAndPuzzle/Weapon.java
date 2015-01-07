@@ -31,6 +31,10 @@ public class Weapon extends Item
 		strength = Integer.parseInt(dbWeapon[1]);
 	}
 
+    /**Two argument constructor
+     * @param name The name of the weapon
+     * @param strength The strength of the weapon
+     */
     public Weapon(String name, int strength)
     {
         super(name);

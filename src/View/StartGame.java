@@ -14,8 +14,6 @@ public class StartGame
 {
     public static void main(String[] args)
     {
-//        String word = "\nAre you going to collect this?";
-//        System.out.println(word.contains("Are you"));
         View view = new View();
         view.gameMenus();
     }

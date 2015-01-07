@@ -19,7 +19,7 @@ import controller.itemsAndPuzzle.Weapon;
  */
 public class ItemCollection
 {
-    //NEW
+    //static instance variables
     private static Rooms currentRoom;
     private static MenusAndMessages menusAndMessages;
 

@@ -64,7 +64,7 @@ public class Inventory
                 }
             }
         }
-        View.setControllerDisplay("You are unable to carry any more items.");
+        new View().setControllerDisplay("You are unable to carry any more items.");
         return false;
     }
 
@@ -94,7 +94,7 @@ public class Inventory
                 }
             }
         }
-        View.setControllerDisplay("You are unable to carry any more items.");
+        new View().setControllerDisplay("You are unable to carry any more items.");
         return false;
     }
 
@@ -124,7 +124,7 @@ public class Inventory
                 }
             }
         }
-        View.setControllerDisplay("You are unable to carry any more items.");
+        new View().setControllerDisplay("You are unable to carry any more items.");
         return false;
     }
 
@@ -187,7 +187,7 @@ public class Inventory
                 }
             }
         }
-        View.setControllerDisplay(weaponArmElixName + " could not be found in your inventory.");
+        new View().setControllerDisplay(weaponArmElixName + " could not be found in your inventory.");
         return false;
     }
 
@@ -241,7 +241,7 @@ public class Inventory
                 return weapons[s];
             }
         }
-        View.setControllerDisplay("Your inventory appears to be empty.");
+        new View().setControllerDisplay("Your inventory appears to be empty.");
         return null;
     }
 
@@ -258,7 +258,7 @@ public class Inventory
                 return elixirs[s];
             }
         }
-        View.setControllerDisplay("Your inventory appears to be empty.");
+        new View().setControllerDisplay("Your inventory appears to be empty.");
         return null;
     }
 
@@ -275,7 +275,7 @@ public class Inventory
                 return armors[s];
             }
         }
-        View.setControllerDisplay("Your inventory appears to be empty.");
+        new View().setControllerDisplay("Your inventory appears to be empty.");
         return null;
     }
 
@@ -297,11 +297,11 @@ public class Inventory
                 }
                 h++;
             }
-            View.setControllerDisplay("No item with the name: " + weaponArmElixName + " could be found in your inventory. Check your spelling and try again.");
+            new View().setControllerDisplay("No item with the name: " + weaponArmElixName + " could be found in your inventory. Check your spelling and try again.");
         }
         else
         {
-            View.setControllerDisplay("Your inventory appears to be empty.");
+            new View().setControllerDisplay("Your inventory appears to be empty.");
         }
         return false;
     }
@@ -319,7 +319,7 @@ public class Inventory
                 return ruckSack[s][1];
             }
         }
-        View.setControllerDisplay("No item type for " + weaponArmElixName + " could not be found in your inventory.");
+        new View().setControllerDisplay("No item type for " + weaponArmElixName + " could not be found in your inventory.");
         return null;
     }
 

@@ -1,6 +1,8 @@
 package junitTestCases;
 
 import controller.AccountFunctions;
+import controller.GameInteractions;
+import controller.MenusAndMessages;
 import controller.inventory.Inventory;
 import controller.itemsAndPuzzle.Weapon;
 import controller.itemsAndPuzzle.Armor;
@@ -9,6 +11,7 @@ import controller.itemsAndPuzzle.Elixir;
 import controller.room.Rooms;
 import org.junit.Before;
 import org.junit.Test;
+import view.View;
 
 import static org.junit.Assert.*;
 
@@ -28,10 +31,17 @@ public class InventoryTest
     Weapon weapon;
     Armor armor;
     Elixir elixir;
+    static MenusAndMessages menusAndMessages;
+    static GameInteractions gameInteractions;
+    static AccountFunctions accountFunctions;
 
     @Before
     public void setUp() throws Exception
     {
+        //UNCOMMENT(!)(!) setMenusAndMessages() in the View class
+        //setMenuAndMessages() exist purely for JunitTestSuite
+        new View().setMenusAndMessages(new MenusAndMessages());
+
         new AccountFunctions().setLoginOrCreateChoice(2);
         new AccountFunctions().loginCreate("InventoryTestName");
 

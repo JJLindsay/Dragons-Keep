@@ -18,13 +18,10 @@ import java.sql.SQLException;
  */
 public class AccountDB
 {
+    //static instance variables
     private static Database tdb = new Database(); //original
     private boolean duplicateKey;
     private int caKey;
-
-    //NEW
-//    private static AccountFunctions accountFunctions;
-
 
     /**verifies the user account
      * @param playerName The player name
@@ -32,8 +29,6 @@ public class AccountDB
      */
     public boolean loginAccount(String playerName)  //Somehow this is creating problems for mod later
     {
-//        tdb = new Database();
-
         try
         {
             //Query the database. Returns the results in a ResultSet
@@ -49,7 +44,6 @@ public class AccountDB
             }
 
             rs.close();
-//            stmt.close();
         }
         catch(SQLException sqe)
         {
@@ -66,13 +60,8 @@ public class AccountDB
     {
         caKey = 1;
         duplicateKey = true;
-//        Hero player = new AccountFunctions().getHero();
 
-//        tdb = new Database();
-        System.out.println("SAVE #8 In createAccount");
         do{
-            //BEFORE inserting:: compare user requested name against names already in the db
-
             //the value returned is the number of effected rows (for us its either 0 or 1)
             int err = tdb.modData("INSERT INTO playerFile (playerID, name, hasInventory, score, health) " +
                     "VALUES (" + caKey + ", \'" + name + "\'," + 0 + "," + 0 + "," + 100 + ")");
@@ -88,7 +77,6 @@ public class AccountDB
             }
         }while (duplicateKey);
 
-//            stmt.close();
         return caKey;
     }
 

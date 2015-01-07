@@ -25,13 +25,11 @@ public class View
     private String response;
     private boolean startingUp = true;
 
-    //NEW
+    //static instance variable
     private static MenusAndMessages menusAndMessages;  //original
     private static GameInteractions gameInteractions;  //original
     private static RoomInteractions roomInteractions;
     private static AccountFunctions accountFunctions;  //original
-
-    //static instance variable
     private static String controllerDisplay;
 
     /**All the in-game menus displayed to the user
@@ -91,8 +89,6 @@ public class View
      */
     private void mainMenu()
     {
-        System.out.println("--------------------------WRONG: "+  response);  //DEBUG CODE
-
         display = gameInteractions.mainMenu(response);
         showDisplayAndRespond();
 
@@ -104,7 +100,6 @@ public class View
     private void moveLocationMenu()
     {
         roomInteractions = new RoomInteractions();  //Do only one once
-        System.out.println("--------------------------WRONG2: "+  response);  //DEBUG CODE
 
         display = roomInteractions.changingRooms(response);  //calls roomInteractions for room description
         showDisplayAndRespond();
@@ -117,7 +112,6 @@ public class View
     private void enteringRoomMenu()
     {
         roomInteractions = new RoomInteractions();  //Do only one once
-        System.out.println("--------------------------Your VIEW response: "+  response);  //DEBUG CODE
 
         display = roomInteractions.roomInteractions(response);  //allows room interaction:: enter room response, initially rucksack, received changedRoomsMessage()
         showDisplayAndRespond();
@@ -130,8 +124,6 @@ public class View
      */
     private void battleMenu()
     {
-        System.out.println("--------------------------WRONG3: "+  response);  //DEBUG CODE
-
         display = gameInteractions.battle(response);
         showDisplayAndRespond();
 
@@ -147,8 +139,6 @@ public class View
      */
     private void puzzleMenu()
     {
-        System.out.println("--------------------------WRONG4: "+  response);  //DEBUG CODE
-
         display = new Puzzle().solvePuzzle(response);
         showDisplayAndRespond();
 
@@ -159,8 +149,6 @@ public class View
      */
     private void quitGameMenu()
     {
-        System.out.println("--------------------------WRONG5: "+  response);  //DEBUG CODE
-
         display = gameInteractions.quitGame(response);
         showDisplayAndRespond();
 
@@ -188,7 +176,7 @@ public class View
     /**Allows Inventory methods in the controller package with return types other than string to send a message to view
      * @param controllerDisplay The message to be displayed
      */
-    public static void setControllerDisplay(String controllerDisplay)
+    public void setControllerDisplay(String controllerDisplay)
     {
         View.controllerDisplay = controllerDisplay;
     }
@@ -198,13 +186,8 @@ public class View
         return menusAndMessages;
     }
 
-    public AccountFunctions getAccountFunctions()
+    public void setMenusAndMessages(MenusAndMessages menusAndMessages)
     {
-        return accountFunctions;
-    }
-
-    public GameInteractions getGameInteractions()
-    {
-        return gameInteractions;
+        View.menusAndMessages = menusAndMessages;
     }
 }

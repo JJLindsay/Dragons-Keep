@@ -15,9 +15,10 @@ import controller.room.Rooms;
  */
 public class Elixir extends Item
 {
+    //instance variables
 	private int healthBoost;
 
-    //NEW
+    //static instance variables
     private static ItemDB itemDB = new ItemDB();
     private static Rooms rooms = new AccountFunctions().getRooms();
 
@@ -32,6 +33,10 @@ public class Elixir extends Item
         this.healthBoost = Integer.parseInt(dbElixir[1]);
 	}
 
+    /**Two argument constructor
+     * @param name The name of the elixir
+     * @param healthBoost The boost to health
+     */
     public Elixir(String name, int healthBoost)
     {
         super(name);

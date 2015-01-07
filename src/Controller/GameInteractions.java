@@ -21,15 +21,17 @@ public class GameInteractions
     //instance variables
     private static Hero player;
 
-    //NEW
+    //static instance variables
     private static AccountFunctions accountFunctions;
     private static MenusAndMessages menusAndMessages = new View().getMenusAndMessages();
     private static Rooms rooms;
-    private static Monster monster;// = new RoomInteractions().getMonster();
+    private static Monster monster;
     private static boolean freshEncounter;
     private static int monsterHealth;
 
     /**Interprets the user's response and points them to login() or CreateAccount()
+     * @param userInput The user response
+     * @return The results and the next menu
      */
     public String titleScreenInput(String userInput)
     {
@@ -54,6 +56,8 @@ public class GameInteractions
     }
 
     /**This method handles the Hero's request to quit the game
+     * @param userInput The user response
+     * @return System/game exit or error
      */
     public String quitGame(String userInput)
     {
@@ -76,6 +80,8 @@ public class GameInteractions
     }
 
     /**This method handles the fight interactions between the Hero and an enemy
+     * @param userInput The user response
+     * @return The results and the next menu
      */
     public String battle(String userInput)
     {
@@ -146,13 +152,11 @@ public class GameInteractions
                 if (monster.getHealth() - player.getAttackPower() > 0)  //monster lives
                 {
                     freshEncounter = false;
-                    System.out.println("dagger power: " + player.getAttackPower());  //DEBUG CODE
                     monsterHealth = monster.getHealth() - player.getAttackPower();
                     monster.setHealth(monster.getHealth() - player.getAttackPower());
                     attackResults = "You lunged at " + monster.getName() + " but your attack wasn't good enough to bring'em down,";
                 } else  //monster dies
                 {
-//                    freshEncounter = true;
                     attackResults = "You dealt a deadly blow with that last move! You killed " + monster.getName() + ".";
                     //set monster to zero for this room
                     rooms.getCurrentRoom().setIsMonster(0);
@@ -215,6 +219,8 @@ public class GameInteractions
     }
 
     /**This is the in game menu the Hero can call at any time
+     * @param userInput The user response
+     * @return The results and the next menu
      */
     public String mainMenu(String userInput)
     {
@@ -308,16 +314,25 @@ public class GameInteractions
         }
     }
 
+    /**Set the fresh monster encounter state
+     * @param freshEncounter The monster encounter
+     */
     public void setFreshEncounter(boolean freshEncounter)
     {
         GameInteractions.freshEncounter = freshEncounter;
     }
 
+    /**
+     * @return Get the monster health
+     */
     public int getMonsterHealth()
     {
         return monsterHealth;
     }
 
+    /**
+     * @return Get if a player is having a fresh monster encounter
+     */
     public boolean isFreshEncounter()
     {
         return freshEncounter;

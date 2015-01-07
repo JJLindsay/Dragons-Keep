@@ -64,7 +64,7 @@ public class InventoryDB
         boolean looping;
 
         //if the playerID already exist, delete it
-        ResultSet rs = null;
+        ResultSet rs;
         try
         {
             //Query the database. Returns the results in a ResultSet
@@ -182,7 +182,7 @@ public class InventoryDB
                     }
                     else
                     {
-                        View.setControllerDisplay("Successfully saved Hero inventory to the database.");
+                        new View().setControllerDisplay("Successfully saved Hero inventory to the database.");
                         looping = false;
                     }
                 }while(looping);

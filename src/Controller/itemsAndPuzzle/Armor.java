@@ -33,6 +33,10 @@ public class Armor extends Item
 		this.armorStrength = Integer.parseInt(dbArmor[1]);
 	}
 
+    /**Two argument constructor
+     * @param name The name of the armor
+     * @param armorStrength The armor's strength
+     */
     public Armor(String name, int armorStrength)
     {
         super(name);

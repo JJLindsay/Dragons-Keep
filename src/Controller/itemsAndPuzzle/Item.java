@@ -15,11 +15,16 @@ abstract class Item
     //instance variables
 	private String itemName;
 
+    /**No argument constructor
+     */
     public Item()
     {
         itemName = "";
     }
 
+    /**One argument constructor
+     * @param name The name of the actor
+     */
     public Item(String name)
     {
         this.itemName = name;
@@ -34,6 +39,9 @@ abstract class Item
 		return itemName;
 	}
 
+    /**Sets the name of the actor
+     * @param itemName The name of the actor
+     */
     public void setItemName(String itemName)
     {
         this.itemName = itemName;

@@ -24,14 +24,11 @@ public class RoomInteractions
     //instance variables
     private static Hero player;
 
-    //NEW
+    //static instance variables
     private static MenusAndMessages menusAndMessages = new View().getMenusAndMessages();
     private static ItemCollection itemCollection;  //original
     private static EmptyARoom emptyARoom;  //original
     private static Rooms rooms = new AccountFunctions().getRooms();
-
-    //Experiment
-//    private static Monster monster;
 
     /**This manages the changing from one room to another
      * @param userInput The user's response
@@ -39,9 +36,6 @@ public class RoomInteractions
      */
     public String changingRooms(String userInput)
     {
-//        menusAndMessages = n;
-//        rooms = new AccountFunctions().getRooms();
-
         //Prompts the user to change to a new room or enter the menu screen
         if (userInput.equalsIgnoreCase("menu"))
         {
@@ -91,10 +85,6 @@ public class RoomInteractions
      */
     public String roomInteractions(String userInput)
     {
-//        menusAndMessages = new View().getMenusAndMessages();
-//        rooms = new AccountFunctions().getRooms();
-
-        System.out.println("Your response: "+  userInput);  //DEBUG CODE
         player = new AccountFunctions().getHero();
 
         //rucksack is not an item, monster or puzzle and is therefore not represented in the
@@ -146,7 +136,6 @@ public class RoomInteractions
         {
             if (userInput.equalsIgnoreCase("yes"))
             {
-//                monster = new Monster();
                 new GameInteractions().setFreshEncounter(true);
                 return menusAndMessages.battleMessage();
             } else if (userInput.equalsIgnoreCase("no"))  
@@ -183,9 +172,4 @@ public class RoomInteractions
             return changingRooms(userInput);
         }
     }
-//
-//    public Monster getMonster()
-//    {
-//        return monster;
-//    }
 }
