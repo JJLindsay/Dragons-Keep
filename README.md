@@ -1,6 +1,6 @@
 Welcome to Dragons-Keep
 ===========
-!!!<b>DISCLAIMER</b> - 04/01/2015 -This project is under going several <i><b>dramatic</b></i> refactorings in the coming weeks, primarily dealing with various creation design patterns: singleton, Factory, and more.
+!!!<b>DISCLAIMER</b> - 04/01/2015 -This project is under going several <i><b>dramatic</b></i> refactorings in the coming weeks, primarily dealing with various creation design patterns: singleton, Factory, and more. A GUI and a name change is also coming soon...
 
 Dragons Keep is a text based adventure game written for ITEC 3860, Software Development I
 --This started as a course project but I have since heavily updated this and continue to do so...
