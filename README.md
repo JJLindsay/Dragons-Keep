@@ -2,11 +2,12 @@ Welcome to Dragons-Keep
 ===========
 !!!<b>DISCLAIMER</b> - 04/01/2015 -This project is under going several <i><b>dramatic</b></i> refactorings in the coming weeks, primarily dealing with various creation design patterns: singleton, Factory, and more. A GUI and a name change is also coming soon...
 
-Dragons Keep is a text based adventure game written for ITEC 3860, Software Development I<br/>
---This started as a course project for teams of 4 students to come up with an idea for a Java text-based game and implement it using the full SDLC (Software Development Lifecycle). Since the project's completion, I have carried on to heavily improve the code and I will continue to do so...
-
+Dragons Keep is a text-based adventure game written for ITEC 3860, Software Development I<br/>
+<ul>
+<li>This started as a course project for teams of 4 students to come up with an idea for a Java text-based game and implement it using the full SDLC (Software Development Lifecycle). Since the project's completion, I have carried on to heavily improve the code and I will continue to do so...</li>
+</ul>
 ENJOY :)<br/>
-Advice and sugggestions are welcome!
+Advice and suggestions are welcome!
 
 
 HOW TO RUN
